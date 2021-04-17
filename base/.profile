@@ -1,14 +1,11 @@
-# In an interactive login shell (e.g. a terminal, tmux, or ssh connection), bash looks for login
-# scripts in this order:
-#
-# /etc/profile - this is always executed if it exists
-# 
-# bash then looks in the home directory for one of these scripts, executing the first readable
-# file found and ignoring the others.
-#
-# ~/.bash_profile
-# ~/.bash_login
-# ~/.profile
+# Order of initialization:
+# - Interactive login shell (ssh or local login):
+# -- /etc/profile
+# -- Then, first of: ~/.bash_profile, ~/.bash_login, ~/.profile
+# - Interactive non-login shell (new shell):
+# -- ~/.bashrc
+# - Non-interactive shell (e.g. to run a shell script)
+# -- Source the file in $BASH_ENV
 
 # I use this file for very basic environment setup that is needed by all shells. It is expected
 # that the shell's profile script will call this script.
@@ -29,11 +26,14 @@ export VISUAL=$EDITOR
 export TERMINAL=
 export BROWSER=
 
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
 # Run any configuration profile scripts
 # Configuration directories can place scripts in ~/.config/profile to be run
 # as part of the login profile.
-if [ -d "$HOME/.config/profile" ]; then
-	echo "Sourcing profile scripts"
+if [ -d "$XDG_CONFIG_HOME/profile" ]; then
+    for f in "$XDG_CONFIG_HOME/profile"/*; do . "$f"; done
 fi
 
 # Configure nix home manager

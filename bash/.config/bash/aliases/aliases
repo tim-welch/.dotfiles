@@ -1,0 +1,17 @@
+alias sb='source ~/.bashrc'
+
+if [ -x /usr/bin/dircolors ]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	test -r ~/.dir_colors && eval `dircolors ~/.dir_colors/dircolors`
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+	alias zgrep='zgrep --color=auto'
+fi
+
+
+alias tmux='TERM=xterm-256color tmux'
+alias ssh='ssh -Y'
+alias e=$EDITOR
+
+alias ls="exa --group-directories-first --git"
