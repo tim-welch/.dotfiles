@@ -18,7 +18,7 @@
 	url = https://github.com/vimwiki/vimwiki
 [submodule "vim/.vim/pack/default/start/vim-table-mode"]
 	path = vim/.vim/pack/default/start/vim-table-mode
-	url = https://github.com/tim-welch/vim-table-mode
+	url = https://github.com/dhruvasagar/vim-table-mode.git
 [submodule "vim/.vim/pack/default/start/vim-surround"]
 	path = vim/.vim/pack/default/start/vim-surround
 	url = https://github.com/tpope/vim-surround
