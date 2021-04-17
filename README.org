@@ -1,0 +1,16 @@
+* Configuring Linux
+  Both my tooling and my dotfiles are managed in this git repository.
+
+** Tools
+   All tools I depend on for my normal workflow are installed and managed using Nix Home Manager. This allows me to have the same tools at the same version regardless of my base operating system.
+
+   This includes the tools required to install my dotfiles.
+
+   Run =./bootstrap= to install the tools.
+
+** dotfiles
+   I use =stow= to manage my dotfiles. This allows me to organize the configurations by application and link to them from my home directory.
+
+   To see what =stow= will do, run =stow --verbose=2 -nSt ~ base nix-home-manager=. This will run =stow= on both =base= and =nix-home-manager= replicating the directory structure in =~= (the home directory). But instead of actually creating the links, the =-n= option tells =stow= to show what would happen including any errors.
+
+   To install the dotfiles, run =stow -St ~ base nix-home-manager=.
