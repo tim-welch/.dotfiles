@@ -1,0 +1,39 @@
+#!/bin/env bash
+
+#set -x
+
+SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
+cd $SCRIPT_DIR
+GIT_ROOT=$(git rev-parse --show-toplevel)
+
+which nix-env
+NIXENV_INSTALLED=$?
+which home-manager
+NIXHM_INSTALLED=$?
+
+DATE=$(date +"%F:%T")
+
+if [ $NIXENV_INSTALLED != 0 ]
+then
+    echo "Installing nix package manager"
+    sudo install -d -m755 -o $(id -u) -g $(id -g) /nix
+    curl -L https://nixos.org/nix/install | sh
+    . $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
+
+if [ $NIXHM_INSTALLED != 0 ]
+then
+    echo "Installing nix home manager"
+    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    nix-channel --update
+    nix-shell '<home-manager>' -A install
+    . $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
+
+echo "Setting up nix config directory"
+[ ! -d ~/.config ] && mkdir -p ~/.config
+if [ ! -L ~/.config/nixpkgs ] ; then
+  [ -d ~/.config/nixpkgs ] && echo "Moving nixpkgs"; mv ~/.config/nixpkgs ~/.config/nixpkgs.$DATE
+  ln -s $GIT_ROOT/nix-home-manager/.config/nixpkgs ~/.config/nixpkgs
+fi
+
