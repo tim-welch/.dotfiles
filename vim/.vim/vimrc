@@ -1,0 +1,20 @@
+" Use VIM defaults
+unlet! skip_defaults_vim
+source $VIMRUNTIME/defaults.vim
+
+" Use XDG data directory
+set undodir=$XDG_DATA_HOME/vim/undo
+set directory=$XDG_DATA_HOME/vim/swap
+set backupdir=$XDG_DATA_HOME/vim/backup
+set viewdir=$XDG_DATA_HOME/vim/view
+set viminfo+='1000,n$XDG_DATA_HOME/vim/viminfo
+
+" Use Alt hjkl to resize windows
+" Only works in neovim
+"nnoremap <M-j> :resize -2<CR>
+"nnoremap <M-k> :resize +2<CR>
+"nnoremap <M-h> :vertical resize -2<CR>
+"nnoremap <M-l> :vertical resize +2<CR>
+
+" Fix problem with VIM starting in replace mode in WSL
+nnoremap <esc>^[ <esc>^[

@@ -66,6 +66,7 @@
     nixfmt
     black # python formatter
     xdotool # X11 keyboard and mouse simulation
+    nodejs
 
     font-awesome
     terminus_font
