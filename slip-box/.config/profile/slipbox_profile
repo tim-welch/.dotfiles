@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+if [ ! -e "$HOME/dropbox" ]; then
+    if [ "$(hostname)" = "tims-laptop" ]; then
+        ln -s /mnt/d/Users/timot/Dropbox "$HOME/dropbox"
+    fi
+fi
+
+if [ ! -e "$HOME/slip-box" ]; then
+    if [ -e "$HOME/dropbox" ]; then
+        ln -s "$HOME/dropbox/slip-box" "$HOME/slip-box"
+    fi
+fi

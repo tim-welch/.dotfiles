@@ -16,7 +16,7 @@
    To install the dotfiles, run:
 
 #+begin_src sh
-stow -St ~ base nix-home-manager bash git vim tmux emacs
+stow -St ~ base nix-home-manager bash git vim tmux emacs slip-box
 #+end_src
 
 
