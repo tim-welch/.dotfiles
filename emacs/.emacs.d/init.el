@@ -178,6 +178,8 @@
 
 ;; (use-package forge) ; TODO Integrate with github, gitlab, etc. only partial support for Gitea and Bitbucket
 
+(setq vc-follow-symlinks t)
+
 
 
 
