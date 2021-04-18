@@ -109,7 +109,7 @@
   :config
   (counsel-mode 1))
 
-;; Setup fuzzy find using ivy and counsel (ido and help are alternatives)
+;; Setup fuzzy find using ivy and counsel (ido and helm are alternatives)
 (use-package ivy
   :diminish
   :bind (("C-s" . swiper)
@@ -351,10 +351,22 @@
     :prefix "SPC"
     :global-prefix "C-SPC"))
 
+(defun tew/find-file-in-home ()
+  "open a file in the home directory"
+  (interactive)
+  (ido-find-file-in-dir "~"))
+
+(defun tew/find-file-in-slip-box ()
+  "open a file in the slip-box"
+  (interactive)
+  (ido-find-file-in-dir "~/slip-box"))
+
 (with-eval-after-load 'counsel
   (tew/leader-keys
     "RET" 'counsel-switch-buffer ; use SPC RET to switch buffers
     "e" 'counsel-find-file ; use SPC e to open a new file
+    "E" 'tew/find-file-in-slip-box
+    "." 'tew/find-file-in-home
     "o a" 'org-agenda ; bring up the agenda menu
     ))
 
