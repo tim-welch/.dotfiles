@@ -23,13 +23,31 @@
   (auto-package-update-maybe)
   (auto-package-update-at-time "08:00"))
 
-;; Try to keep package files together. This should be as early in the script as possible
+
+
+
+
+
+;; Automatically save and backup files
 (use-package no-littering)
 
-;; no-littering doesn't set this by default so we must place
-;; auto save files in the same path as it uses for sessions
-(setq auto-save-file-name-transforms
-      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+(setq make-backup-files t
+      vc-make-backup-files t
+      kept-new-versions 100
+      kept-old-versions 5
+      delete-old-versions t
+      backup-by-copying t)
+
+(defun force-backup-of-buffer ()
+  (setq buffer-backed-up nil))
+(add-hook 'before-save-hook #'force-backup-of-buffer)
+
+(use-package backup-walker)
+(let ((dir (no-littering-expand-var-file-name "auto-save/")))
+  (make-directory dir t)
+  (add-to-list 'auto-save-file-name-transforms `(".*" ,dir t) 'append))
+
+
 
 
 
