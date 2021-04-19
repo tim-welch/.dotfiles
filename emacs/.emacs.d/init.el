@@ -211,6 +211,53 @@
   (visual-line-mode 1)       ; word wrap
   (setq evil-auto-indent nil)) ; don't auto indent using evil mode; use org-mode indent
 
+;; Switch between work and personal
+;; TODO Decide whether to include all files in the slip-box so I can put TODO anywhere
+(defun org-focus-personal () "Set focus on my personal tasks"
+       (interactive)
+       (setq org-agenda-files
+	     '("~/slip-box/inbox.org"
+	       "~/slip-box/todo.org"
+	       "~/slip-box/birthdays.org"))
+       (setq org-default-notes-file "~/slip-box/inbox.org")
+       )
+(defun org-focus-work () "Set focus on my work tasks"
+       (interactive)
+       (setq org-agenda-files
+	     '("~/slip-box/inbox.org"
+	       "~/slip-box/Work Tasks.org"))
+       (setq org-default-notes-file "~/slip-box/inbox.org")
+       )
+(defun org-focus-all () "Set focus on all my tasks"
+       (interactive)
+       (setq org-agenda-files
+	     '("~/slip-box/inbox.org"
+	       "~/slip-box/todo.org"
+	       "~/slip-box/birthdays.org"
+	       "~/slip-box/Work Tasks.org"))
+       (setq org-default-notes-file "~/slip-box/inbox.org")
+       )
+	
+(setq org-capture-templates
+      ;; `(("t" "Tasks / Projects")
+	;; ("tt" "Task" entry (file+olp+datetree "~/slip-box/inbox.org")
+	 ;; "* TODO %?\n %U\n %a\n %i" :empty-lines 1)
+	;; ("tp" "Project" entry (file+olp+datetree "~/slip-box/inbox.org")
+	 ;; "* PROJ %?\n %U\n %a\n %i" :empty-lines 1)
+      ;; )
+
+      `(("t" "Task" entry (file+olp+datetree "~/slip-box/inbox.org")
+	 "* TODO %?\n %U\n %i\n %a" :empty-lines 1)
+	("p" "Project" entry (file+olp+datetree "~/slip-box/inbox.org")
+	 "* PROJ %?\n %U\n %i\n %a" :empty-lines 1)
+	("j" "Journal entry" entry (file+olp+datetree "~/slip-box/journal.org")
+	 "* %U\n %?\n %i\n %a")
+	("n" "Note" entry (file+olp+datetree "~/slip-box/inbox.org")
+	 "* %U\n %?\n %i\n %a")
+	)
+      )
+	 
+
 (use-package org ; use the latest orgmode - requires entry in package-archives
   :ensure org-plus-contrib ; required to pull the latest version instead of using the built-in package
   :hook (org-mode . tew/org-mode-setup)
@@ -218,39 +265,20 @@
   ;; TODO Use custom instead of config and setq?
   (setq org-ellipsis " ▾"   ; use down-arrow instead of ...
 	org-hide-emphasis-markers nil) ; show the emphasis markers (e.g. *bold*)
-  (setq org-agenda-files    ; list of files to be included in org-agenda
-	'("~/slip-box/todo.org" ; todo list
-	  "~/slip-box/birthdays.org" ; friends and family b-days
-	  "~/slip-box/Work Tasks.org"
-	  )
-	; TODO Decide whether to include all files in the slip-box so I can put TODO anywhere
-	)
+  (org-focus-all) ; default to all tasks
+
   ;; By setting maxlevel to 1 and no outline path, we essentially set up the task files to have a
   ;; top level project or grouping with tasks below it. This is a pretty good fit for GTD
-  (setq org-refile-targets `((org-agenda-files :maxlevel . 1))) ; C-c C-w offers these locations to refile the task
+  (setq org-refile-targets ; C-c C-w offers these locations to refile the task
+	`(("archive.org" :maxlevel . 1)
+	  (org-agenda-files :maxlevel . 1)))
   (setq org-refile-use-outline-path 'file) ; 'file - Display targets as a path with the filename included
 					; non-nil - display as a path but don't include filename
 					; nil - display title (filename)
   (setq org-outline-path-complete-in-steps nil)
   ;; TODO For some reason this isn't allowing me to create new headings
   (setq org-refile-allow-creating-parent-nodes 'confirm) ; prompt before creating a new parent node for the task
-  (defun org-focus-private () "Set focus on my personal tasks"
-	 (interactive)
-	 (setq org-agenda-files
-	       '("~/slip-box/todo.org"
-		 "~/slip-box/birthdays.org")))
-  (defun org-focus-work () "Set focus on my work tasks"
-	 (interactive)
-	 (setq org-agenda-files
-		 '("~/slip-box/Work Tasks.org")))
-  (defun org-focus-all () "Set focus on all my tasks"
-	 (interactive)
-	 (setq org-agenda-files
-	       '("~/slip-box/todo.org"
-		 "~/slip-box/birthdays.org"
-		 "~/slip-box/Work Tasks.org")))
-  
-
+  (advice-add 'org-refile :after 'org-save-all-org-buffers) ; Save org buffers after refiling
   
   ;; Setup TODO states. Everything before "|" is active and everything after it is done.
   ;; The () contains configuration for the state
@@ -268,7 +296,7 @@
 	   ((agenda "" ((org-deadline-warning-days 7)))
 	    (todo "NEXT"
 		  ((org-agenda-overriding-header "Next Tasks")))
-	    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))
+g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))
 	    (todo "WAIT"
 		  ((org-agenda-overriding-header "Waiting For")))))
 
@@ -277,14 +305,6 @@
 	   ((todo "NEXT"
 		  ((org-agenda-overriding-header "Next Tasks")))))
 
-	  ;; Give me a list of work tasks
-	  ("W" "Work Tasks" tags-todo "+TODO=\"NEXT\"+work")
-	  ;; ("W" "Work Tasks"
-	   ;; ((todo "NEXT" tags-todo "+work"
-		  ;; ((org-agenda-overriding-header "Next Work Tasks")))
-	    ;; (todo "WAIT"
-		  ;; ((org-agenda-overriding-header "Waiting For")))))
-
 	  ;; Low-effort next actions
 	  ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0" ; effort is set and less than 15 min
 	   ((org-agenda-overriding-header "Low Effort Tasks")
@@ -292,14 +312,13 @@
 	    (org-agenda-files org-agenda-files)))
 
 	  ;; Give me a list of tasks waiting for someone else
-	  ("w" "Workflow Status"
+	  ("w" "Waiting for"
 	   ((todo "WAIT"
 		  ((org-agenda-overriding-header "Waiting for")))))
 
-	  ;; TODO - Do I want to merge the 2 sequenses?
-	  ;; TODO - Do I want filters for the Scrum-ish sequence?
-	  ;; TODO - Do I want a list of SOMEDAYMAYBE tasks/projects? - Actually I think I want to set up a review workflow for this one.
-	  ;; TODO - Should I use a tag (like above) for work tasks or use a different file? I think a tag because then I can have project specific files and use the tag there
+	  ("p" tags-todo "phone"
+	   ((org-agenda-overriding-header "Phone Calls")))
+
 	  ))
 
 	  
@@ -413,6 +432,7 @@
     "E" 'tew/find-file-in-slip-box
     "." 'tew/find-file-in-home
     "o a" 'org-agenda ; bring up the agenda menu
+    "c" 'org-capture ; bring up the capture menu
     ))
 
 ;; (use-package hydra) ; menu-ish TODO do I want to use this for anything? https://github.com/abo-abo/hydra
