@@ -225,10 +225,37 @@
 	  )
 	; TODO Decide whether to include all files in the slip-box so I can put TODO anywhere
 	)
+  ;; By setting maxlevel to 1 and no outline path, we essentially set up the task files to have a
+  ;; top level project or grouping with tasks below it. This is a pretty good fit for GTD
+  (setq org-refile-targets `((org-agenda-files :maxlevel . 1))) ; C-c C-w offers these locations to refile the task
+  (setq org-refile-use-outline-path 'file) ; 'file - Display targets as a path with the filename included
+					; non-nil - display as a path but don't include filename
+					; nil - display title (filename)
+  (setq org-outline-path-complete-in-steps nil)
+  ;; TODO For some reason this isn't allowing me to create new headings
+  (setq org-refile-allow-creating-parent-nodes 'confirm) ; prompt before creating a new parent node for the task
+  (defun org-focus-private () "Set focus on my personal tasks"
+	 (interactive)
+	 (setq org-agenda-files
+	       '("~/slip-box/todo.org"
+		 "~/slip-box/birthdays.org")))
+  (defun org-focus-work () "Set focus on my work tasks"
+	 (interactive)
+	 (setq org-agenda-files
+		 '("~/slip-box/Work Tasks.org")))
+  (defun org-focus-all () "Set focus on all my tasks"
+	 (interactive)
+	 (setq org-agenda-files
+	       '("~/slip-box/todo.org"
+		 "~/slip-box/birthdays.org"
+		 "~/slip-box/Work Tasks.org")))
+  
+
+  
   ;; Setup TODO states. Everything before "|" is active and everything after it is done.
   ;; The () contains configuration for the state
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "WAIT(w@/!)" "SOMEDAYMAYBE(m)" "|" "DONE(d!)") ; GTD-ish
+	'((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "SOMEDAY(m)" "|" "DONE(d@/@)" "CANCELLED(c@/@)" ; GTD-ish
 	  ; (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANCELLED(k)") ; Scrum-ish
 	  ))
 
