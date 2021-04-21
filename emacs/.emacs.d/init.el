@@ -177,10 +177,11 @@
   :bind-keymap
   ("C-c p" . projectile-command-map) ; Use C-c p to bring up a menu of projectile functions
   :init
-  (when (file-directory-p "~/src")                                ; if ~/src exists
-    (setq projectile-project-search-path '("~/src")))             ; then use it as the root directory of the projects
+  (when (file-directory-p "~")                                ; if ~/src exists
+    (setq projectile-project-search-path '("~")))             ; then use it as the root directory of the projects
+  (setq projectile-git-coomand "git ls-files -zc --exclude-standard") ; only include files tracked by git (by default-o is used to include "others")
+  (setq projectile-indexing-method 'alien) ; use external tools without any internal sorting, etc.
   (setq projectile-switch-project-action #'projectile-dired))     ; bring up dired when switching projects
-;; TODO Move emacs repo to ~/src so it is available in C-c p p (projectile project list)  
 
 (use-package counsel-projectile    ; extend projectile with additional ivy functionality
   :config (counsel-projectile-mode)) ; enable the counsel-projectile-mode
@@ -283,7 +284,7 @@
   ;; Setup TODO states. Everything before "|" is active and everything after it is done.
   ;; The () contains configuration for the state
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "SOMEDAY(m)" "|" "DONE(d@/@)" "CANCELLED(c@/@)" ; GTD-ish
+	'((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "SOMEDAY(m)" "|" "DONE(d@/@)" "CANCELLED(c@/@)") ; GTD-ish
 	  ; (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANCELLED(k)") ; Scrum-ish
 	  ))
 
@@ -408,6 +409,19 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
   :config
   (evil-collection-init))
 
+
+(use-package dash) ; a modern list API for emacs; required by org-evil
+(global-dash-fontify-mode)
+(with-eval-after-load 'info-look
+  (dash-register-info-lookup))
+
+(use-package monitor) ; API for creating monitors (hooks, timers, etc); required by org-evil
+
+(use-package org-evil
+  :after evil
+  :config
+  (org-evil-mode))
+
 (use-package general
   :config
   (general-create-definer tew/leader-keys
@@ -443,7 +457,7 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
+   '(org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
