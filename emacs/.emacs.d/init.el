@@ -75,8 +75,9 @@
 
 ;; Line numbers
 (column-number-mode) ; add column to mode line
+(setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode t) ; add line numbers to all buffers
-(dolist (mode '(org-mode-hook
+(dolist (mode '(;org-mode-hook
                 term-mode-hook
                 shell-mode-hook
                 treemacs-mode-hook
@@ -418,7 +419,7 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
 (use-package monitor) ; API for creating monitors (hooks, timers, etc); required by org-evil
 
 (use-package org-evil
-  :after evil
+  :after (evil evil-collection dash monitor org)
   :config
   (org-evil-mode))
 
