@@ -13,6 +13,18 @@
 (require 'use-package)                         ; load use-package
 (setq use-package-always-ensure t)             ; fail if a use-package fails (a package cannot be downloaded and installed)
 
+;; Install quelpa for github hosted packages
+(unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
+(quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url "https://github.com/quelpa/quelpa-use-package.git"))
+(require 'quelpa-use-package)
+
 ;; Update the packages regularly
 (use-package auto-package-update
   :custom
@@ -188,6 +200,9 @@
   :config (counsel-projectile-mode)) ; enable the counsel-projectile-mode
 
 
+;; Neotree - file list window (like Nerdtree)
+(use-package neotree)
+
 ;; Git management
 (use-package magit    ; git porcelain inside emacs
   :custom
@@ -199,6 +214,10 @@
 ;; (use-package forge) ; TODO Integrate with github, gitlab, etc. only partial support for Gitea and Bitbucket
 
 (setq vc-follow-symlinks t)
+
+;; Dired+ - extensions to dired including "*." to mark all files based on extension
+(use-package dired+
+  :quelpa (dired+ :fetcher github :repo "emacsmirror/dired-plus"))
 
 
 
@@ -333,19 +352,19 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
   (setq org-log-into-drawer t) ; Don't show the log, but make it available
   )
 
-(use-package org-bullets
-  :after org
-  :hook (org-mode . org-bullets-mode)
-  :custom
-  ;; Use a special character for top level headings then alternate open and closed circles for nested
-  ;; levels. Note that we cycle back to the top level icon. This is useful as such deeply nested sections
-  ;; probably indicates we need to break the note up
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●" )))
+;; (use-package org-bullets
+  ;; :after org
+  ;; :hook (org-mode . org-bullets-mode)
+  ;; :custom
+  ;; ;; Use a special character for top level headings then alternate open and closed circles for nested
+  ;; ;; levels. Note that we cycle back to the top level icon. This is useful as such deeply nested sections
+  ;; ;; probably indicates we need to break the note up
+  ;; (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●" )))
 
 ;; Replace list hyphen with dot
-(font-lock-add-keywords 'org-mode
-			'(("^ *\\([-]\\) "
-			    (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+;; (font-lock-add-keywords 'org-mode
+			;; '(("^ *\\([-]\\) "
+			    ;; (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 ;; scale the headings based on level
 (with-eval-after-load 'org-faces             ; Prevent errors if org-faces hasn't loaded yet
@@ -458,7 +477,7 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
+   '(neotree quelpa-use-package quelpa dired+ org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
