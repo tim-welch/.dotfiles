@@ -203,6 +203,11 @@
 ;; Neotree - file list window (like Nerdtree)
 (use-package neotree)
 
+;; Treemacs - file list window
+;; (use-package lsp-treemacs)
+;; (use-package treemacs-evil)
+;; (use-package treemacs-projectile)
+
 ;; Git management
 (use-package magit    ; git porcelain inside emacs
   :custom
@@ -237,26 +242,26 @@
 (defun org-focus-personal () "Set focus on my personal tasks"
        (interactive)
        (setq org-agenda-files
-	     '("~/slip-box/inbox.org"
-	       "~/slip-box/todo.org"
-	       "~/slip-box/birthdays.org"))
-       (setq org-default-notes-file "~/slip-box/inbox.org")
+	     '("~/slip-box/agenda/inbox.org"
+	       "~/slip-box/agenda/todo.org"
+	       "~/slip-box/agenda/birthdays.org"))
+       (setq org-default-notes-file "~/slip-box/agenda/inbox.org")
        )
 (defun org-focus-work () "Set focus on my work tasks"
        (interactive)
        (setq org-agenda-files
-	     '("~/slip-box/inbox.org"
-	       "~/slip-box/Work Tasks.org"))
-       (setq org-default-notes-file "~/slip-box/inbox.org")
+	     '("~/slip-box/agenda/inbox.org"
+	       "~/slip-box/agenda/work.org"))
+       (setq org-default-notes-file "~/slip-box/agenda/inbox.org")
        )
 (defun org-focus-all () "Set focus on all my tasks"
        (interactive)
        (setq org-agenda-files
-	     '("~/slip-box/inbox.org"
-	       "~/slip-box/todo.org"
-	       "~/slip-box/birthdays.org"
-	       "~/slip-box/Work Tasks.org"))
-       (setq org-default-notes-file "~/slip-box/inbox.org")
+	     '("~/slip-box/agenda/inbox.org"
+	       "~/slip-box/agenda/todo.org"
+	       "~/slip-box/agenda/birthdays.org"
+	       "~/slip-box/agenda/work.org"))
+       (setq org-default-notes-file "~/slip-box/agenda/inbox.org")
        )
 	
 (setq org-capture-templates
@@ -267,13 +272,13 @@
 	 ;; "* PROJ %?\n %U\n %a\n %i" :empty-lines 1)
       ;; )
 
-      `(("t" "Task" entry (file+olp+datetree "~/slip-box/inbox.org")
+      `(("t" "Task" entry (file+olp+datetree "~/slip-box/agenda/inbox.org")
 	 "* TODO %?\n %U\n %i\n %a" :empty-lines 1)
-	("p" "Project" entry (file+olp+datetree "~/slip-box/inbox.org")
+	("p" "Project" entry (file+olp+datetree "~/slip-box/agenda/inbox.org")
 	 "* PROJ %?\n %U\n %i\n %a" :empty-lines 1)
-	("j" "Journal entry" entry (file+olp+datetree "~/slip-box/journal.org")
+	("j" "Journal entry" entry (file+olp+datetree "~/slip-box/journal/journal.org")
 	 "* %U\n %?\n %i\n %a")
-	("n" "Note" entry (file+olp+datetree "~/slip-box/inbox.org")
+	("n" "Note" entry (file+olp+datetree "~/slip-box/agenda/inbox.org")
 	 "* %U\n %?\n %i\n %a")
 	)
       )
@@ -291,7 +296,7 @@
   ;; By setting maxlevel to 1 and no outline path, we essentially set up the task files to have a
   ;; top level project or grouping with tasks below it. This is a pretty good fit for GTD
   (setq org-refile-targets ; C-c C-w offers these locations to refile the task
-	`(("archive.org" :maxlevel . 1)
+	`(("~/slip-box/agenda/archive.org" :maxlevel . 1)
 	  (org-agenda-files :maxlevel . 1)))
   (setq org-refile-use-outline-path 'file) ; 'file - Display targets as a path with the filename included
 					; non-nil - display as a path but don't include filename
@@ -398,6 +403,12 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
 (use-package visual-fill-column
   :hook (org-mode . efs/org-mode-visual-fill)) ; configure for org-mode only
 
+;; Use org-roam to get back links
+(use-package org-roam)
+(setq org-roam-directory "~/slip-box")
+(add-hook 'after-init-hook 'org-roam-mode) ; TODO Move to :hook in use-package?
+;; (executable-find "sqlite3") ; Use this to verify that sqlite3 is installed
+
 
 
 ;; Key bindings
@@ -465,6 +476,8 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
     "e" 'counsel-find-file ; use SPC e to open a new file
     "E" 'tew/find-file-in-slip-box
     "." 'tew/find-file-in-home
+    "n" 'org-roam-find-file ; open a note
+    "l" 'org-roam-insert ; insert a link
     "o a" 'org-agenda ; bring up the agenda menu
     "c" 'org-capture ; bring up the capture menu
     ))
@@ -477,7 +490,7 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(neotree quelpa-use-package quelpa dired+ org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
+   '(lsp-treemacs treemacs-evil treemacs org-roam neotree quelpa-use-package quelpa dired+ org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

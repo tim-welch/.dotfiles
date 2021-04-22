@@ -71,6 +71,8 @@
     font-awesome
     terminus_font
     hack-font
+    emacs-all-the-icons-fonts
+    sqlite # Used by org-roam
   ];
 
   programs.fzf.enable = true;
