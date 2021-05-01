@@ -233,8 +233,9 @@
   (org-indent-mode)          ; smart indent for org-mode
   (variable-pitch-mode 1)    ; 1 - don't use fixed point font (note using variable pitch mode affects everything in an org file including code and tables)
 			     ; 0 - use fixed point font (makes tables look nice, but now everything is fixed point)
-  (auto-fill-mode 0)         ; don't break lines automatically
-  (visual-line-mode 1)       ; word wrap
+  ;(auto-fill-mode 0)         ; don't break lines automatically
+  (auto-fill-mode 1)         ; break lines automatically
+  ;(visual-line-mode 1)       ; word wrap
   (setq evil-auto-indent nil)) ; don't auto indent using evil mode; use org-mode indent
 
 ;; Switch between work and personal
@@ -322,7 +323,6 @@
 	   ((agenda "" ((org-deadline-warning-days 7)))
 	    (todo "NEXT"
 		  ((org-agenda-overriding-header "Next Tasks")))
-g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))
 	    (todo "WAIT"
 		  ((org-agenda-overriding-header "Waiting For")))))
 
@@ -330,12 +330,6 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
 	  ("n" "Next Tasks"
 	   ((todo "NEXT"
 		  ((org-agenda-overriding-header "Next Tasks")))))
-
-	  ;; Low-effort next actions
-	  ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0" ; effort is set and less than 15 min
-	   ((org-agenda-overriding-header "Low Effort Tasks")
-	    (org-agenda-max-todos 20)
-	    (org-agenda-files org-agenda-files)))
 
 	  ;; Give me a list of tasks waiting for someone else
 	  ("w" "Waiting for"
@@ -395,19 +389,33 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
   (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 
 ;; Configure org-mode window appearence
-(defun efs/org-mode-visual-fill ()
-  (setq visual-fill-column-width 100       ; limit the document width
-        visual-fill-column-center-text t)  ; center the document in the window
+(defun tew/org-mode-visual-fill ()
+  (setq visual-fill-column-width 200       ; limit the document width
+        visual-fill-column-center-text nil)  ; center the document in the window
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
-  :hook (org-mode . efs/org-mode-visual-fill)) ; configure for org-mode only
+  :hook (org-mode . tew/org-mode-visual-fill)) ; configure for org-mode only
 
 ;; Use org-roam to get back links
 (use-package org-roam)
 (setq org-roam-directory "~/slip-box")
+(setq org-roam-tag-sources '(vanilla all-directories)) ; Get tags from directories under slip-box and #+filetags
+					; TODO do I want to use prop (#+roam_tags)?
 (add-hook 'after-init-hook 'org-roam-mode) ; TODO Move to :hook in use-package?
 ;; (executable-find "sqlite3") ; Use this to verify that sqlite3 is installed
+(setq org-roam-capture-templates
+      '(("d" "default" plain (function org-roam--capture-get-point)
+	 "%?"
+	 :file-name "%<%Y%m%d%H%M%S>-${slug}"
+	 :head "#+title: ${title}\n\n:PROPERTIES:\n:behind:\n:sources:\n:END:\n\n"
+	 :unnarrowed t)
+	("r" "reference" plain (function org-roam--capture-get-point)
+	 "%?"
+	 :file-name "%<%Y%m%d%H%M%S>-${slug}"
+	 :head "#+title: ${title}\n#+filetags: :reference:zotero:\n\n:PROPERTIES:\n:behind:\n:END:\n\n:PROPERTIES:\n:type:\n:title:\n:authors:\n:date:\n:link:\n:zotero-local:\n:zotero-cloud:\n:END:\n\n* Summary"
+	 :unnarrowed t)
+	))
 
 
 
@@ -440,6 +448,12 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
   :config
   (evil-collection-init))
 
+(use-package evil-org
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (use-package dash) ; a modern list API for emacs; required by org-evil
 (global-dash-fontify-mode)
@@ -490,7 +504,7 @@ g    (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(lsp-treemacs treemacs-evil treemacs org-roam neotree quelpa-use-package quelpa dired+ org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
+   '(evil-org lsp-treemacs treemacs-evil treemacs org-roam neotree quelpa-use-package quelpa dired+ org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
