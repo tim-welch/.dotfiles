@@ -9,4 +9,7 @@ if [ ! -e "$HOME/slip-box" ]; then
     if [ -e "$HOME/dropbox" ]; then
         ln -s "$HOME/dropbox/slip-box" "$HOME/slip-box"
     fi
+    if [ -e "$HOME/Dropbox" ]; then
+        ln -s "$HOME/Dropbox/slip-box" "$HOME/slip-box"
+    fi
 fi
