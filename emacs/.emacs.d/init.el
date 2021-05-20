@@ -314,7 +314,8 @@
 (use-package dired+
   :quelpa (dired+ :fetcher github :repo "emacsmirror/dired-plus"))
 
-
+;; haskell-mode
+(use-package haskell-mode)
 
 
 
@@ -594,7 +595,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(evil-org lsp-treemacs treemacs-evil treemacs org-roam neotree quelpa-use-package quelpa dired+ org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
+   '(haskell-mode haskell-mod evil-org lsp-treemacs treemacs-evil treemacs org-roam neotree quelpa-use-package quelpa dired+ org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
