@@ -14,7 +14,7 @@ import XMonad.Actions.Promote
 import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
 import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Actions.WithAll (sinkAll, killAll)
-import qualified XMonad.Actions.Search as S
+import XMonad.Actions.Search
 
     -- Data
 import Data.Char (isSpace, toUpper)
@@ -28,10 +28,11 @@ import qualified Data.Map as M
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Hooks.EwmhDesktops  -- for some fullscreen events, also for xcomposite in obs.
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
-import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat)
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.WorkspaceHistory
+import XMonad.Hooks.FadeWindows
 
     -- Layouts
 import XMonad.Layout.Accordion
@@ -333,6 +334,17 @@ myManageHook = composeAll
      , isFullscreen -->  doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
 
+myFadeHook = composeAll
+    [ opaque -- default to opaque
+    , isUnfocused --> opacity 0.85
+    -- , (className =? "Terminator") <&&> (isUnfocused) --> opacity 0.9
+    -- , (className =? "URxvt") <&&> (isUnfocused) --> opacity 1.0
+    -- , fmap ("Google" `isPrefixOf`) className --> opaque
+    , isDialog --> opaque
+    --, isUnfocused --> opacity 0.55
+    --, isFloating  --> opacity 0.75
+    ]
+
 myKeys :: [(String, X ())]
 myKeys =
     -- Xmonad
@@ -507,7 +519,9 @@ main = do
         , borderWidth        = myBorderWidth
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
-        , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
+        , logHook = do
+            fadeWindowsLogHook myFadeHook
+            dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
               -- the following variables beginning with 'pp' are settings for xmobar.
               { ppOutput = \x -> hPutStrLn xmproc0 x                          -- xmobar on monitor 1
                               >> hPutStrLn xmproc1 x                          -- xmobar on monitor 2
