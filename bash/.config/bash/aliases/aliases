@@ -15,6 +15,7 @@ alias ssh='ssh -Y'
 alias e=$EDITOR
 
 alias ls="exa --group-directories-first --git"
+alias tree="exa -T"
 
 alias cat="bat"
 alias less="bat"
