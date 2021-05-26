@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+# Modified from https://github.com/awesome-streamers/awesome-streamerrc/blob/master/ThePrimeagen/tmux2
+
+if [ $# -eq 1 ]; then
+    selected=$1
+else
+    items=$(find ~ -maxdepth 1 -mindepth 1 -type d)
+    items+=$(find ~/src -maxdepth 1 -mindepth 1 -type d)
+    selected=$(echo "$items" | fzf)
+fi
+
+session=`basename $selected`
+if [ ${session:0:1} == '.' ]; then
+    session=_${session:1}
+fi
+
+tmux switch-client -t $session
+if [ $? -eq 0 ]; then
+    exit 0
+fi
+
+tmux new-session -c $selected -d -s $session && tmux switch-client -t $session || tmux new -c $selected -A -s $session
+
