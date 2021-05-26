@@ -336,7 +336,7 @@ myManageHook = composeAll
 
 myFadeHook = composeAll
     [ opaque -- default to opaque
-    , isUnfocused --> opacity 0.85
+    , isUnfocused --> opacity 0.9
     -- , (className =? "Terminator") <&&> (isUnfocused) --> opacity 0.9
     -- , (className =? "URxvt") <&&> (isUnfocused) --> opacity 1.0
     -- , fmap ("Google" `isPrefixOf`) className --> opaque
