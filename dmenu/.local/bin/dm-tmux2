@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#
+# Script name: dm-kill
+# Description: Search for a process to kill.
+# Dependencies: dmenu
+# GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
+# Contributors: Derek Taylor
+
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
+main() {
+    # Running ps to get running processes and display in dmenu.
+    items=$(find ~ -maxdepth 1 -mindepth 1 -type d)
+    items+=$(find ~/src -maxdepth 1 -mindepth 1 -type d)
+    selected="$(echo "$items" | \
+                dmenu -i -l 20 -p "projects:" "$@")"
+
+    alacritty -e tmux2 $selected
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"

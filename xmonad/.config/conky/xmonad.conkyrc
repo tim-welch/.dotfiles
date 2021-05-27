@@ -100,13 +100,16 @@ ${goto 12}${color1}${top_mem name 3}$alignr$color${top_mem mem_res 3}
 ${voffset 18}${color1}${alignc}XMONAD KEYBINDINGS${color}
 ${color1}${hr}${color}
 ${color1}[S]+[RET]${alignr}${color2}opens terminal${color}
-${color1}[S]+[SPC]+[RET]${alignr}${color2}run prompt${color}
+${color1}[S]+[SPC]${alignr}${color2}opens terminal${color}
+${color1}[S]+[SHIFT]+[SPC]${alignr}${color2}opens terminal${color}
+${color1}[S]+[SHIFT]+[RET]${alignr}${color2}run prompt${color}
 ${color1}[S]+[SHIFT]+c${alignr}${color2}close window${color}
 ${color1}[S]+jk${alignr}${color2}move win focus${color}
 ${color1}[S]+[SHIFT]+hjkl${alignr}${color2}move window${color}
 ${color1}[S]+[0-9]${alignr}${color2}switch workspace${color}
 ${color1}[S]+[SHIFT]+[0-9]${alignr}${color2}send window${color}
 ${color1}[S]+h/l${alignr}${color2}shrink/expand${color}
+${color1}[S]+F${alignr}${color2}toggle full screen${color}
 ${color1}${hr}${color}
 ${color1}[S]+e, e${alignr}${color2}launch emacs${color}
 ${color1}[S]+e, b${alignr}${color2}ibuffer${color}

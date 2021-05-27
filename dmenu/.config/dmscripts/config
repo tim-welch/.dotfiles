@@ -7,7 +7,7 @@
 
 # Defined variables, modify anything in quotes to your prefered software
 DMBROWSER="brave"
-DMTERM="st -e"
+DMTERM="alacritty -e"
 
 # dm-logout
 logout_locker='slock'
