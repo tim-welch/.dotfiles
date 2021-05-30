@@ -111,13 +111,8 @@ ${color1}[S]+[SHIFT]+[0-9]${alignr}${color2}send window${color}
 ${color1}[S]+h/l${alignr}${color2}shrink/expand${color}
 ${color1}[S]+F${alignr}${color2}toggle full screen${color}
 ${color1}${hr}${color}
-${color1}[S]+e, e${alignr}${color2}launch emacs${color}
-${color1}[S]+e, b${alignr}${color2}ibuffer${color}
-${color1}[S]+e, d${alignr}${color2}dired${color}
-${color1}[S]+e, n${alignr}${color2}elfeed${color}
-${color1}[S]+e, s${alignr}${color2}eshell${color}
-${color1}[S]+e, v${alignr}${color2}vterm${color}
-${color1}[S]+e, w${alignr}${color2}eww browser${color}
+${color1}[S]+e${alignr}${color2}launch editor${color}
+${color1}[S]+b${alignr}${color2}launch browser${color}
 ${color1}${hr}${color}
 ${color1}[S]+p, e${alignr}${color2}dm-confedit${color}
 ${color1}[S]+p, i${alignr}${color2}dm-maim${color}

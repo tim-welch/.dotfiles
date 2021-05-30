@@ -394,10 +394,10 @@ myKeys =
         , ("M-S-t", sinkAll)                       -- Push ALL floating windows to tile
 
     -- Increase/decrease spacing (gaps)
-        , ("C-M1-j", decWindowSpacing 4)         -- Decrease window spacing
-        , ("C-M1-k", incWindowSpacing 4)         -- Increase window spacing
-        , ("C-M1-h", decScreenSpacing 4)         -- Decrease screen spacing
-        , ("C-M1-l", incScreenSpacing 4)         -- Increase screen spacing
+        , ("M-C-j", decWindowSpacing 4)         -- Decrease window spacing
+        , ("M-C-k", incWindowSpacing 4)         -- Increase window spacing
+        , ("M-C-h", decScreenSpacing 4)         -- Decrease screen spacing
+        , ("M-C-l", incScreenSpacing 4)         -- Increase screen spacing
 
     -- Grid Select (CTR-g followed by a key)
         , ("C-g g", spawnSelected' myAppGrid)                 -- grid select favorite apps
@@ -433,10 +433,10 @@ myKeys =
 
     -- Sublayouts
     -- This is used to push windows to tabbed sublayouts, or pull them out of it.
-        , ("M-C-h", sendMessage $ pullGroup L)
-        , ("M-C-l", sendMessage $ pullGroup R)
-        , ("M-C-k", sendMessage $ pullGroup U)
-        , ("M-C-j", sendMessage $ pullGroup D)
+        -- , ("M-C-h", sendMessage $ pullGroup L)
+        -- , ("M-C-l", sendMessage $ pullGroup R)
+        -- , ("M-C-k", sendMessage $ pullGroup U)
+        -- , ("M-C-j", sendMessage $ pullGroup D)
         , ("M-C-m", withFocused (sendMessage . MergeAll))
         -- , ("M-C-u", withFocused (sendMessage . UnMerge))
         , ("M-C-/", withFocused (sendMessage . UnMergeAll))
@@ -464,21 +464,21 @@ myKeys =
         , ("M-u <Space>", spawn "mocp --toggle-pause")
 
     -- Emacs (CTRL-e followed by a key)
-        , ("M-e e", spawn (myEmacs))                 -- start emacs
+        , ("M-e", spawn (myEmacs))                 -- start emacs
         -- , ("M-e e", spawn (myEmacs ++ ("--eval '(dashboard-refresh-buffer)'")))   -- emacs dashboard
-        , ("M-e b", spawn (myEmacs ++ ("--eval '(ibuffer)'")))   -- list buffers
-        , ("M-e d", spawn (myEmacs ++ ("--eval '(dired nil)'"))) -- dired
-        , ("M-e i", spawn (myEmacs ++ ("--eval '(erc)'")))       -- erc irc client
-        , ("M-e m", spawn (myEmacs ++ ("--eval '(mu4e)'")))      -- mu4e email
-        , ("M-e n", spawn (myEmacs ++ ("--eval '(elfeed)'")))    -- elfeed rss
-        , ("M-e s", spawn (myEmacs ++ ("--eval '(eshell)'")))    -- eshell
-        , ("M-e t", spawn (myEmacs ++ ("--eval '(mastodon)'")))  -- mastodon.el
+        -- , ("M-e b", spawn (myEmacs ++ ("--eval '(ibuffer)'")))   -- list buffers
+        -- , ("M-e d", spawn (myEmacs ++ ("--eval '(dired nil)'"))) -- dired
+        -- , ("M-e i", spawn (myEmacs ++ ("--eval '(erc)'")))       -- erc irc client
+        -- , ("M-e m", spawn (myEmacs ++ ("--eval '(mu4e)'")))      -- mu4e email
+        -- , ("M-e n", spawn (myEmacs ++ ("--eval '(elfeed)'")))    -- elfeed rss
+        -- , ("M-e s", spawn (myEmacs ++ ("--eval '(eshell)'")))    -- eshell
+        -- , ("M-e t", spawn (myEmacs ++ ("--eval '(mastodon)'")))  -- mastodon.el
         -- , ("M-e v", spawn (myEmacs ++ ("--eval '(vterm nil)'"))) -- vterm if on GNU Emacs
-        , ("M-e v", spawn (myEmacs ++ ("--eval '(+vterm/here nil)'"))) -- vterm if on Doom Emacs
+        -- , ("M-e v", spawn (myEmacs ++ ("--eval '(+vterm/here nil)'"))) -- vterm if on Doom Emacs
         -- , ("M-e w", spawn (myEmacs ++ ("--eval '(eww \"distrotube.com\")'"))) -- eww browser if on GNU Emacs
-        , ("M-e w", spawn (myEmacs ++ ("--eval '(doom/window-maximize-buffer(eww \"distrotube.com\"))'"))) -- eww browser if on Doom Emacs
+        -- , ("M-e w", spawn (myEmacs ++ ("--eval '(doom/window-maximize-buffer(eww \"distrotube.com\"))'"))) -- eww browser if on Doom Emacs
         -- emms is an emacs audio player. I set it to auto start playing in a specific directory.
-        , ("M-e a", spawn (myEmacs ++ ("--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")))
+        -- , ("M-e a", spawn (myEmacs ++ ("--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")))
 
     -- Multimedia Keys
         , ("<XF86AudioPlay>", spawn (myTerminal ++ "mocp --play"))
