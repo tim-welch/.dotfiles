@@ -1,0 +1,6 @@
+--exchange $
+--effective
+--sort date
+--real
+--file ~/slip-box/finances/personal.ledger
+

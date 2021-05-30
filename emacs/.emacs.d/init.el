@@ -193,8 +193,7 @@
   :bind-keymap
   ("C-c p" . projectile-command-map) ; Use C-c p to bring up a menu of projectile functions
   :init
-  (when (file-directory-p "~")                                ; if ~/src exists
-    (setq projectile-project-search-path '("~")))             ; then use it as the root directory of the projects
+  (setq projectile-project-search-path '("~" "~/src"))             ; search the home directory and ~/src for projects
   (setq projectile-git-coomand "git ls-files -zc --exclude-standard") ; only include files tracked by git (by default-o is used to include "others")
   (setq projectile-indexing-method 'alien) ; use external tools without any internal sorting, etc.
   (setq projectile-switch-project-action #'projectile-dired))     ; bring up dired when switching projects
@@ -511,6 +510,8 @@
 	 :unnarrowed t)
 	))
 
+;; Ledger
+(use-package ledger-mode)
 
 
 ;; Key bindings
@@ -598,7 +599,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(vterm haskell-mode haskell-mod evil-org lsp-treemacs treemacs-evil treemacs org-roam neotree quelpa-use-package quelpa dired+ org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
+   '(ledger-mode flycheck-mode flymake-mode vterm haskell-mode haskell-mod evil-org lsp-treemacs treemacs-evil treemacs org-roam neotree quelpa-use-package quelpa dired+ org-evil monitor visual-fill-column org-bullets org-plus-contrib evil-magit magit counsel-projectile projectile evil-collection evil general helpful ivy-rich doom-themes no-littering auto-package-update which-key doom-modeline counsel ivy command-log-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
