@@ -39,6 +39,9 @@ fi
 # Configure nix home manager
 [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 
+# Configure cargo
+[ -d "$HOME/.cargo/bin" ] && PATH="$HOME/.cargo/bin:${PATH#*$HOME/.cargo/bin}"
+
 # Make sure user bin directories are at the beginning of PATH
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:${PATH#*$HOME/bin}"
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:${PATH#*$HOME/.local/bin}"
