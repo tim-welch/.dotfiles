@@ -88,7 +88,7 @@ __prompt() {
             local git="$COLOR_GIT[$(__git_info)]$COLOR_RESET"
         fi
 
-        PS1="$timer$userhost$git $cwd$symbol"
+        PS1="$git $cwd$symbol"
     }
 
     PROMPT_COMMAND="ps1${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
