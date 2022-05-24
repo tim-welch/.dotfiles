@@ -43,3 +43,5 @@ shopt -s nocaseglob   # Ignore case when performing pathname expansion
 # Prompt
 source "$XDG_CONFIG_HOME/bash/prompt"
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
