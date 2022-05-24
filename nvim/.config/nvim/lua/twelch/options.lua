@@ -1,6 +1,6 @@
 -- Tabs
-vim.bo.expandtab = true  -- expand tabs to spaces
-vim.bo.shiftwidth = 4
-vim.bo.softtabstop = 4
+vim.opt.expandtab = true  -- expand tabs to spaces
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
 
 
