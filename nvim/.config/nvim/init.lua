@@ -1,4 +1,4 @@
-require("twelch.packages")
-require("twelch.options")
-require("twelch.keybindings")
+require("packages")
+require("options")
+require("keybindings")
 
