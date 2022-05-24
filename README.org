@@ -15,6 +15,14 @@
 **** Ubuntu
     =apt install cargo=
     =cargo install bat exa=
+***** For neovim
+  *neovim 0.5+ is required*
+  - Fix clipboard
+    =apt install xsel=
+  - Python support
+    =pip install pynvim=
+  - Node support
+    =npm i -g neovim
 
 ** dotfiles
    I use =stow= to manage my dotfiles. This allows me to organize the configurations by application and link to them from my home directory.
