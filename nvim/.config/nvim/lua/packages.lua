@@ -10,6 +10,14 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- Put plugins here
+    use { -- alpha-nvim replaces the default nvim dashboard
+        'goolord/alpha-nvim',
+        requires = { 'kyazdani42/nvim-web-devicons' },
+        config = function ()
+            require'alpha'.setup(require'alpha.themes.startify'.opts)
+            vim.api.nvim_set_keymap('n', '<c-n>', ':Alpha<cr>', { noremap = true })
+        end
+    }
 
     -- Put this at the end after all plugins
     if packer_bootstrap then
