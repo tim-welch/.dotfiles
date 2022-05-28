@@ -4,3 +4,4 @@ result
 #*
 vim/.vim/.netrwhist
 nvim/.config/nvim/plugin/
+compiledb
