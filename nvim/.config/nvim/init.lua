@@ -5,3 +5,7 @@ require("keybindings")
 if (vim.loop.os_uname().sysname == 'Linux') then
     -- Linux specific configuration
 end
+
+if vim.env.TMUX then
+    require("tmux-clipboard")
+end
