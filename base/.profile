@@ -20,7 +20,7 @@ export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
 # These are defined here because regardless of shell, I want to use the same applications.
 # Also note these are not defined as part of an application's configuration. Applications
 # do not get to choose whether they are default or not.
-export EDITOR=vim
+export EDITOR=nvim
 export GIT_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 export TERMINAL=
