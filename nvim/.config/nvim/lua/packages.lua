@@ -40,6 +40,7 @@ return packer.startup(function(use)
 
     -- Put plugins here
     use 'nvim-telescope/telescope.nvim' -- fuzzy find
+    use 'folke/which-key.nvim' -- menu
     use {
         -- replace the default nvim dashboard
         "goolord/alpha-nvim",
