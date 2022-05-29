@@ -1,13 +1,13 @@
-require("packages")
-require("options")
-require("keybindings")
-require("colorscheme")
-require("whichkey")
+require("my/packages")
+require("my/options")
+require("my/keybindings")
+require("my/colorscheme")
+require("my/whichkey")
 
 if (vim.loop.os_uname().sysname == 'Linux') then
     -- Linux specific configuration
 end
 
 if vim.env.TMUX then
-    require("tmux-clipboard")
+    require("my/tmux-clipboard")
 end
