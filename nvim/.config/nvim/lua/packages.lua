@@ -33,7 +33,6 @@ return require('packer').startup(function(use)
             handle:close()
             dashboard.section.footer.val = fortune
             dashboard.config.opts.noautocmd = true
-            vim.cmd[[autocmd User AlphaReady echo 'ready']]
             alpha.setup(dashboard.config)
         end
     }
