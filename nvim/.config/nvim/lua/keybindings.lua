@@ -1,6 +1,6 @@
 -- Key binding helpers
 local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
+local opts = { noremap = true, silent = false }
 
 -- Leader key
 keymap("", "<Space>", "<Nop>", opts)
@@ -31,5 +31,5 @@ keymap("v", ">", ">gv", opts)
 keymap("n", "<c-n>", ":Alpha<CR>", opts)
 
 -- Source the current lua file
-keymap("n", "<c-s", ":source %", opts)
+keymap("n", "<c-s>", ":source %<CR>", opts)
 
