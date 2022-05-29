@@ -34,7 +34,12 @@ return packer.startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
+    -- Plugins used by lots of other plugins
+    use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
+    use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
+
     -- Put plugins here
+    use 'nvim-telescope/telescope.nvim' -- fuzzy find
     use {
         -- replace the default nvim dashboard
         "goolord/alpha-nvim",
