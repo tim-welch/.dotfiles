@@ -41,6 +41,11 @@ return packer.startup(function(use)
     -- Put plugins here
     use 'nvim-telescope/telescope.nvim' -- fuzzy find
     use 'folke/which-key.nvim' -- menu
+    use 'hrsh7th/nvim-cmp'     -- completion
+    use 'hrsh7th/cmp-buffer'   -- complete from current buffer
+    use 'hrsh7th/cmp-path'     -- complete paths
+    use 'hrsh7th/cmp-cmdline'  -- complete commandline (e.g. : and /)
+
     use {
         -- replace the default nvim dashboard
         "goolord/alpha-nvim",
