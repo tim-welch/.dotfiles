@@ -82,17 +82,22 @@ local opts = {
 local mappings = {
     ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
     ["b"] = { "<cmd>Telescope buffers<cr>", "Buffers" },
+    ["k"] = { "<cmd>Telescope keymaps<cr>", "Show keymaps" },
 
     f = {
         name = "Files",
         f = { "<cmd>Telescope find_files<cr>", "Find files" },
-        g = { "<cmd>Telescope git_files<cr>", "Find git files" },
+        g = { "<cmd>Telescope git_files<cr>", "Git files" },
+        s = { "<cmd>Telescope git_status<cr>", "Git status" },
+        c = { "<cmd>Telescope git_commits<cr>", "Git commits" },
+        b = { "<cmd>Telescope git_commits<cr>", "Git branches" },
     },
 
     g = {
-        name = "Git",
-        f = { "<cmd>Telescope git_files<cr>", "Git files" },
-        c = { "<cmd>Telescope git_commits<cr>", "Git commits" },
+        name = "Goto",
+        d = { "<cmd>Telescope lsp_definitions<cr>", "LSP definitions" },
+        r = { "<cmd>Telescope lsp_references<cr>", "LSP references" },
+        g = { "<cmd>Telescope live_grep<cr>", "Grep" },
     },
 }
 
