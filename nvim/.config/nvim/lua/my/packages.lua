@@ -47,6 +47,7 @@ return packer.startup(function(use)
     use "L3MON4D3/LuaSnip" --snippet engine
     use "goolord/alpha-nvim" -- Dashboard
     use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
+    use "akinsho/toggleterm.nvim" -- Toggle multiple terminals
     use {
         "numToStr/Comment.nvim", -- comment lines and blocks
         config = function()

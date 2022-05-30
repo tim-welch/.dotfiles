@@ -103,7 +103,13 @@ local mappings = {
     c = {
         name = "Code",
         f = { vim.lsp.buf.formatting, "Format file" },
-    }
+    },
+
+    t = {
+        name = "Terminal",
+        h = { _HTOP_TOGGLE, "htop" },
+        p = { _PYTHON_TOGGLE, "python" },
+    },
 }
 
 wk.setup(setup)
