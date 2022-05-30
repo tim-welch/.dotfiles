@@ -10,6 +10,7 @@ if not status_ok then
     return
 end
 
+local opts = { noremap = true, silent = false }
 dashboard.section.header.val = {
     [[                               __                ]],
     [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
@@ -19,13 +20,14 @@ dashboard.section.header.val = {
     [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
 }
 dashboard.section.buttons.val = {
-    dashboard.button( "e", "  New file" , ":ene <BAR> startinsert <CR>"),
-    dashboard.button( "c", "  Configuration", ":e ~/.config/nvim/init.lua<CR>"),
-    dashboard.button( "q", "  Quit NVIM" , ":qa<CR>"),
+    dashboard.button( "e", "  New file" , ":ene <BAR> startinsert <CR>", opts),
+    dashboard.button( "f", "  Find file" , ":Telescope find_files<CR>", opts),
+    dashboard.button( "g", "  Find git file" , ":Telescope git_files<CR>", opts),
+    dashboard.button( "r", "  Recently used files" , ":Telescope oldfiles<CR>", opts),
+    dashboard.button( "t", "  Find text" , ":Telescope live_grep<CR>", opts),
+    dashboard.button( "c", "  Configuration", ":e ~/.config/nvim/init.lua<CR>", opts),
+    dashboard.button( "q", "  Quit NVIM" , ":qa<CR>", opts),
 }
-local handle = io.popen('fortune')
-local fortune = handle:read("*a")
-handle:close()
-dashboard.section.footer.val = fortune
 dashboard.config.opts.noautocmd = true
+dashboard.section.buttons.opts.hl = "Keyword"
 alpha.setup(dashboard.config)

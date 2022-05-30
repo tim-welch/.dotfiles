@@ -15,7 +15,6 @@ if not status_ok then
     return
 end
 
-print("Setting up nvim-lsp-installer")
 lspinst.setup {}
 
 local on_attach = function(_, bufnr)
