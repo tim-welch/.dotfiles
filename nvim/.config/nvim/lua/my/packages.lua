@@ -38,45 +38,20 @@ return packer.startup(function(use)
     use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
     use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
 
-    -- Put plugins here
+    -- Plugins
     use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
     use 'nvim-telescope/telescope.nvim' -- fuzzy find
     use 'folke/which-key.nvim' -- menu
     use "L3MON4D3/LuaSnip" --snippet engine
+    use "goolord/alpha-nvim" -- Dashboard
+
+    -- Completion
     use 'hrsh7th/nvim-cmp'     -- completion
     use 'hrsh7th/cmp-buffer'   -- complete from current buffer
     use 'hrsh7th/cmp-path'     -- complete paths
     use 'hrsh7th/cmp-cmdline'  -- complete commandline (e.g. : and /)
     use 'hrsh7th/cmp-nvim-lsp' -- complete using LSP
     use "saadparwaiz1/cmp_luasnip" -- snippet completions
-
-    use {
-        -- replace the default nvim dashboard
-        "goolord/alpha-nvim",
-        config = function ()
-            local alpha = require'alpha'
-            local dashboard = require'alpha.themes.dashboard'
-            dashboard.section.header.val = {
-                [[                               __                ]],
-                [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
-                [[ / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
-                [[/\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-                [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-                [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
-            }
-            dashboard.section.buttons.val = {
-                dashboard.button( "e", "  New file" , ":ene <BAR> startinsert <CR>"),
-                dashboard.button( "c", "  Configuration", ":e ~/.config/nvim/init.lua<CR>"),
-                dashboard.button( "q", "  Quit NVIM" , ":qa<CR>"),
-            }
-            local handle = io.popen('fortune')
-            local fortune = handle:read("*a")
-            handle:close()
-            dashboard.section.footer.val = fortune
-            dashboard.config.opts.noautocmd = true
-            alpha.setup(dashboard.config)
-        end
-    }
 
     -- Put this at the end after all plugins
     if packer_bootstrap then

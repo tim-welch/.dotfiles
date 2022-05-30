@@ -1,6 +1,7 @@
 require("my/packages")
 require("my/options")
 require("my/colorscheme")
+require("my/alpha")
 require("my/which-key")
 require("my/completion")
 require("my/lsp")
