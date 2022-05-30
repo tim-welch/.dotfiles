@@ -52,15 +52,11 @@ return packer.startup(function(use)
     -- use "akinsho/bufferline.nvim" -- Customize tabs
     use "nvim-lualine/lualine.nvim" -- Customize status line
     use {
-        "numToStr/Comment.nvim", -- comment lines and blocks
-        config = function()
-            require('Comment').setup()
-        end
-    }
-    use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
+    use "numToStr/Comment.nvim" -- comment lines and blocks
+    use "JoosepAlviste/nvim-ts-context-commentstring" -- comment code in another type of file
 
     -- Completion
     use 'hrsh7th/nvim-cmp' -- completion
