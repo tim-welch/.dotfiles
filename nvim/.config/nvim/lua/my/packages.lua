@@ -37,6 +37,7 @@ return packer.startup(function(use)
     -- Plugins used by lots of other plugins
     use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
     use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
+    use "kyazdani42/nvim-web-devicons" -- Colored icons
 
     -- Plugins
     use "williamboman/nvim-lsp-installer" -- simple to use language server installer
@@ -48,6 +49,8 @@ return packer.startup(function(use)
     use "goolord/alpha-nvim" -- Dashboard
     use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
     use "akinsho/toggleterm.nvim" -- Toggle multiple terminals
+    -- use "akinsho/bufferline.nvim" -- Customize tabs
+    use "nvim-lualine/lualine.nvim" -- Customize status line
     use {
         "numToStr/Comment.nvim", -- comment lines and blocks
         config = function()

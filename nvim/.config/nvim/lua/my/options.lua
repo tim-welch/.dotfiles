@@ -33,8 +33,8 @@ vim.opt.smartcase = true
 vim.opt.tagcase = "followscs"
 
 -- UI
-vim.opt.showmode = true -- show "-- INSERT --", etc.
-vim.opt.showtabline = 2 -- 0: never, 1: if >1 tab, 2: always
+vim.opt.showmode = false -- show "-- INSERT --", etc.
+vim.opt.showtabline = 1 -- 0: never, 1: if >1 tab, 2: always
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.termguicolors = true
