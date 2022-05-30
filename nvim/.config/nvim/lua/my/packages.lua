@@ -42,11 +42,13 @@ return packer.startup(function(use)
     use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
     use 'nvim-telescope/telescope.nvim' -- fuzzy find
     use 'folke/which-key.nvim' -- menu
+    use "L3MON4D3/LuaSnip" --snippet engine
     use 'hrsh7th/nvim-cmp'     -- completion
     use 'hrsh7th/cmp-buffer'   -- complete from current buffer
     use 'hrsh7th/cmp-path'     -- complete paths
     use 'hrsh7th/cmp-cmdline'  -- complete commandline (e.g. : and /)
     use 'hrsh7th/cmp-nvim-lsp' -- complete using LSP
+    use "saadparwaiz1/cmp_luasnip" -- snippet completions
 
     use {
         -- replace the default nvim dashboard
