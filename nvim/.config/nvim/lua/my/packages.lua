@@ -41,6 +41,7 @@ return packer.startup(function(use)
     -- Plugins
     use "williamboman/nvim-lsp-installer" -- simple to use language server installer
     use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
+    use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
     use 'nvim-telescope/telescope.nvim' -- fuzzy find
     use 'folke/which-key.nvim' -- menu
     use "L3MON4D3/LuaSnip" --snippet engine

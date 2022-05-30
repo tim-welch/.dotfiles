@@ -55,7 +55,7 @@ local setup = {
         align = "left", -- align columns left, center or right
     },
     ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
-    hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
+    hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
     show_help = true, -- show help message on the command line when the popup is visible
     triggers = "auto", -- automatically setup triggers
     -- triggers = {"<leader>"} -- or specify a list manually
@@ -65,7 +65,7 @@ local setup = {
         -- most people should not need to change this
         i = { "j", "k" },
         v = { "j", "k" },
-    },    
+    },
 }
 
 local opts = {
@@ -99,6 +99,11 @@ local mappings = {
         r = { "<cmd>Telescope lsp_references<cr>", "LSP references" },
         g = { "<cmd>Telescope live_grep<cr>", "Grep" },
     },
+
+    c = {
+        name = "Code",
+        f = { vim.lsp.buf.formatting, "Format file" },
+    }
 }
 
 wk.setup(setup)
