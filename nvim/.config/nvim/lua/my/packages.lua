@@ -44,6 +44,12 @@ return packer.startup(function(use)
     use 'folke/which-key.nvim' -- menu
     use "L3MON4D3/LuaSnip" --snippet engine
     use "goolord/alpha-nvim" -- Dashboard
+    use {
+        "numToStr/Comment.nvim", -- comment lines and blocks
+        config = function()
+            require('Comment').setup()
+        end
+    }
 
     -- Completion
     use 'hrsh7th/nvim-cmp'     -- completion
