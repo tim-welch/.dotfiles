@@ -39,12 +39,14 @@ return packer.startup(function(use)
     use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
 
     -- Put plugins here
+    use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
     use 'nvim-telescope/telescope.nvim' -- fuzzy find
     use 'folke/which-key.nvim' -- menu
     use 'hrsh7th/nvim-cmp'     -- completion
     use 'hrsh7th/cmp-buffer'   -- complete from current buffer
     use 'hrsh7th/cmp-path'     -- complete paths
     use 'hrsh7th/cmp-cmdline'  -- complete commandline (e.g. : and /)
+    use 'hrsh7th/cmp-nvim-lsp' -- complete using LSP
 
     use {
         -- replace the default nvim dashboard

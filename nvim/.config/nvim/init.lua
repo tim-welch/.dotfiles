@@ -1,9 +1,10 @@
 require("my/packages")
 require("my/options")
-require("my/keybindings")
 require("my/colorscheme")
-require("my/completion")
 require("my/which-key")
+require("my/completion")
+require("my/lsp")
+require("my/keybindings")
 
 if (vim.loop.os_uname().sysname == 'Linux') then
     -- Linux specific configuration
