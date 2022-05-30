@@ -9,6 +9,15 @@ if not status_ok then
     return
 end
 
+local status_ok, lspinst = pcall(require, "nvim-lsp-installer")
+if not status_ok then
+    print("nvim-lsp-installer is not installed")
+    return
+end
+
+print("Setting up nvim-lsp-installer")
+lspinst.setup {}
+
 local on_attach = function(_, bufnr)
     local opts = { buffer = bufnr }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)

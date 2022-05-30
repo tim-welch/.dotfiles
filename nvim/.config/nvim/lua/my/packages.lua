@@ -3,7 +3,7 @@ local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
     -- If packer not installed, clone it before configuring
-    packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    PACKER_BOOTSTRAP = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
     print "Installing packer; close and reopen neovim..."
 end
 
@@ -39,6 +39,7 @@ return packer.startup(function(use)
     use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
 
     -- Plugins
+    use "williamboman/nvim-lsp-installer" -- simple to use language server installer
     use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
     use 'nvim-telescope/telescope.nvim' -- fuzzy find
     use 'folke/which-key.nvim' -- menu
@@ -50,6 +51,10 @@ return packer.startup(function(use)
             require('Comment').setup()
         end
     }
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
 
     -- Completion
     use 'hrsh7th/nvim-cmp'     -- completion
@@ -60,7 +65,7 @@ return packer.startup(function(use)
     use "saadparwaiz1/cmp_luasnip" -- snippet completions
 
     -- Put this at the end after all plugins
-    if packer_bootstrap then
+    if PACKER_BOOTSTRAP then
         require('packer').sync()
     end
 end)
