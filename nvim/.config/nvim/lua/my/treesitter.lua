@@ -11,9 +11,11 @@ ts.setup {
         "ninja", "nix", "org", "perl", "regex", "todotxt", "toml",
         "vim", "yaml", },
     sync_install = false,
+    autopairs = {
+        enable = true,
+    },
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
-    }
+    },
 }
-
