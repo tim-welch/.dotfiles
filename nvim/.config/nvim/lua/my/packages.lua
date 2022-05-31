@@ -51,14 +51,15 @@ return packer.startup(function(use)
     use "numToStr/Comment.nvim" -- comment lines and blocks
     use "JoosepAlviste/nvim-ts-context-commentstring" -- comment code in another type of file
     use "folke/zen-mode.nvim" -- distraction free editing
-    use "folke/twilight.nvim" --
+    use "folke/twilight.nvim" -- dim text outside of current context
 
     -- Treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
-    use { 'p00f/nvim-ts-rainbow', after = "nvim-treesitter" }
+    use { 'p00f/nvim-ts-rainbow', after = "nvim-treesitter" } -- colorful brackets
+    use "lukas-reineke/indent-blankline.nvim" -- add guides
 
     -- LSP
     use "williamboman/nvim-lsp-installer" -- simple to use language server installer
