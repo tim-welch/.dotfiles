@@ -48,12 +48,15 @@ return packer.startup(function(use)
     use "lewis6991/gitsigns.nvim" -- Show changes in sign column
     -- use "akinsho/bufferline.nvim" -- Customize tabs
     use "nvim-lualine/lualine.nvim" -- Customize status line
+    use "numToStr/Comment.nvim" -- comment lines and blocks
+    use "JoosepAlviste/nvim-ts-context-commentstring" -- comment code in another type of file
+
+    -- Treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
-    use "numToStr/Comment.nvim" -- comment lines and blocks
-    use "JoosepAlviste/nvim-ts-context-commentstring" -- comment code in another type of file
+    use { 'p00f/nvim-ts-rainbow', after = "nvim-treesitter" }
 
     -- LSP
     use "williamboman/nvim-lsp-installer" -- simple to use language server installer
