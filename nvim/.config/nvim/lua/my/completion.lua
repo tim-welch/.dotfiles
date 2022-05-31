@@ -4,11 +4,18 @@ if not status_ok then
     return
 end
 
-local status_ok, luasnip = pcall(require, "luasnip")
-if not status_ok then
+local status_ok1, luasnip = pcall(require, "luasnip")
+if not status_ok1 then
     print("luasnip is not installed")
     return
 end
+
+local status_ok2, lspkind = pcall(require, "lspkind")
+if not status_ok2 then
+    print("lspkind is not installed")
+    return
+end
+
 
 cmp.setup.cmdline(':', {
     sources = {
@@ -64,6 +71,17 @@ cmp.setup({
         -- { name = 'luasnip' }, -- For luasnip users.
         { name = 'buffer' },
         { name = 'path' },
-    })
-})
+    }),
+    formatting = {
+        format = lspkind.cmp_format({
+          mode = 'symbol_text', -- "text", "text_symbol", "symbol_text", "symbol"
+          maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
 
+          -- The function below will be called before any actual modifications from lspkind
+          -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+          before = function (entry, vim_item)
+            return vim_item
+          end
+        })
+    }
+})
