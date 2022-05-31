@@ -50,6 +50,8 @@ return packer.startup(function(use)
     use "nvim-lualine/lualine.nvim" -- Customize status line
     use "numToStr/Comment.nvim" -- comment lines and blocks
     use "JoosepAlviste/nvim-ts-context-commentstring" -- comment code in another type of file
+    use "folke/zen-mode.nvim" -- distraction free editing
+    use "folke/twilight.nvim" --
 
     -- Treesitter
     use {

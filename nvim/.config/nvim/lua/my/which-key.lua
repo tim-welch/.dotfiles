@@ -110,6 +110,12 @@ local mappings = {
         h = { _HTOP_TOGGLE, "htop" },
         p = { _PYTHON_TOGGLE, "python" },
     },
+
+    z = {
+        name = "Zen",
+        z = { ":ZenMode<CR>", "Toggle Zen Mode" },
+        t = { ":Twilight<CR>", "Toggle Twilight" },
+    }
 }
 
 wk.setup(setup)
