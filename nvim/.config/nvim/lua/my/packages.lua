@@ -50,6 +50,7 @@ return packer.startup(function(use)
     use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
     use "akinsho/toggleterm.nvim" -- Toggle multiple terminals
     use "lewis6991/gitsigns.nvim" -- Show changes in sign column
+    use "norcalli/nvim-colorizer.lua" -- Highlight colors in their color
     -- use "akinsho/bufferline.nvim" -- Customize tabs
     use "nvim-lualine/lualine.nvim" -- Customize status line
     use {

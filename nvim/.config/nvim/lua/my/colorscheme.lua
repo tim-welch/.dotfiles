@@ -7,3 +7,6 @@ catch /^Vim\%((\a\+)\)\=:E185/
     set background=dark
 endtry
 ]]
+
+-- Configure colorizer to hightlight colors in their own color
+require'colorizer'.setup()
