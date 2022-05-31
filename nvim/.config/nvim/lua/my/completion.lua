@@ -4,6 +4,12 @@ if not status_ok then
     return
 end
 
+local status_ok, luasnip = pcall(require, "luasnip")
+if not status_ok then
+    print("luasnip is not installed")
+    return
+end
+
 cmp.setup.cmdline(':', {
     sources = {
         { name = 'cmdline' }
@@ -19,7 +25,7 @@ cmp.setup.cmdline('/', {
 cmp.setup({
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            luasnip.lsp_expand(args.body) -- For `luasnip` users.
         end,
     },
     window = {
