@@ -103,6 +103,7 @@ local mappings = {
     c = {
         name = "Code",
         f = { vim.lsp.buf.formatting, "Format file" },
+        t = { "<cmd>TroubleToggle<cr>", "Toggle trouble" },
     },
 
     t = {

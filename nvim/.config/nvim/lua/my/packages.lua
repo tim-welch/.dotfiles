@@ -66,6 +66,17 @@ return packer.startup(function(use)
     use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
     use "L3MON4D3/LuaSnip" --snippet engine
     use "onsails/lspkind.nvim" -- Add icons for LSP kinds
+    use {
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = function()
+            require("trouble").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            }
+        end
+    }
 
     -- Completion
     use 'hrsh7th/nvim-cmp' -- completion
