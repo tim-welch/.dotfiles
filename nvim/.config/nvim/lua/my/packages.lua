@@ -67,6 +67,9 @@ return packer.startup(function(use)
     use 'hrsh7th/cmp-nvim-lsp' -- complete using LSP
     use "saadparwaiz1/cmp_luasnip" -- snippet completions
 
+    -- Color schemes
+    use "ellisonleao/gruvbox.nvim"
+
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
         require('packer').sync()
