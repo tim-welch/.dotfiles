@@ -4,7 +4,5 @@ SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 cd $SCRIPT_DIR
 GIT_ROOT=$(git rev-parse --show-toplevel)
 
-$GIT_ROOT/nix-home-manager/.local/bin/setup-nix-home-manager
+$GIT_ROOT/nix/.local/bin/setup-nix
 source ~/.profile
-home-manager build
-home-manager switch

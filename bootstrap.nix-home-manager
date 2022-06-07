@@ -1,0 +1,33 @@
+#!/bin/env bash
+
+which nix-env
+NIXENV_INSTALLED=$?
+which home-manager
+NIXHM_INSTALLED=$?
+
+if [ $NIXENV_INSTALLED != 0 ]
+then
+    echo "nix package manager not installed; please install and then rerun"
+fi
+
+if [ $NIXHM_INSTALLED != 0 ]
+then
+    echo "Installing nix home manager"
+fi
+
+SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
+cd $SCRIPT_DIR
+GIT_ROOT=$(git rev-parse --show-toplevel)
+
+export NIX_PATH=$HOME/.nix-defexpr/channels
+
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
+. $HOME/.nix-profile/etc/profile.d/nix.sh
+
+
+
+source ~/.profile
+home-manager build
+home-manager switch
