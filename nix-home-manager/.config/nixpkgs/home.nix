@@ -45,6 +45,7 @@
     watch
     watchman
     wget
+    git
 
     ledger
     editorconfig-core-c
