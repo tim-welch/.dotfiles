@@ -15,7 +15,6 @@ if not status_ok2 then
     return
 end
 
-lspinst.setup {}
 
 local on_attach = function(_, bufnr)
     local opts = { buffer = bufnr }
@@ -26,8 +25,9 @@ local on_attach = function(_, bufnr)
 end
 
 local capabilities = cmplsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local servers = { "clangd", }
-for _, lsp in ipairs(servers) do
+local servers = { "clangd", "sumneko_lua" }
+lspinst.setup { ensure_installed = servers }
+for _, lsp in pairs(servers) do
     lspconf[lsp].setup {
         on_attach = on_attach,
         capabilities = capabilities
