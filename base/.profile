@@ -49,5 +49,5 @@ export PATH
 
 # Register my SSH id
 keychain --nogui --quiet $HOME/.ssh/id_rsa
-source $HOME/.keychain/$(hostname)-sh
+. $HOME/.keychain/$(hostname)-sh
 
