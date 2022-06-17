@@ -7,7 +7,7 @@
 
    This includes the tools required to install my dotfiles.
 
-   Run =./bootstrap= to install the tools.
+   Run =./bootstrap.nix= and =./bootstrap.nix-home-manager= to install the tools.
 
 *** Alternative
     If you don't want to use Nix Home Manager, then applications will need to be installed individually.
@@ -32,7 +32,7 @@
    To install the dotfiles, run:
 
 #+begin_src sh
-stow -St ~ base nix-home-manager bash git vim tmux emacs slip-box
+stow -St ~ base nix-home-manager bash git nvim tmux
 #+end_src
 
 
