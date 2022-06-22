@@ -40,7 +40,13 @@ fi
 [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 
 # Configure cargo
-[ -d "$HOME/.cargo/bin" ] && PATH="$HOME/.cargo/bin:${PATH#*$HOME/.cargo/bin}"
+if [ -e "$HOME/.cargo/env" ]
+then
+    . "$HOME/.cargo/env"
+elif [ -d "$HOME/.cargo/bin" ]
+then
+    PATH="$HOME/.cargo/bin:${PATH#*$HOME/.cargo/bin}"
+fi
 
 # Make sure user bin directories are at the beginning of PATH
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:${PATH#*$HOME/bin}"
