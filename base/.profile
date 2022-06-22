@@ -48,6 +48,10 @@ then
     PATH="$HOME/.cargo/bin:${PATH#*$HOME/.cargo/bin}"
 fi
 
+# Configure go
+[ -e "/usr/local/go/bin" ] && PATH="/usr/local/go/bin:${PATH#*/usr/local/go/bin}"
+
+
 # Make sure user bin directories are at the beginning of PATH
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:${PATH#*$HOME/bin}"
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:${PATH#*$HOME/.local/bin}"
