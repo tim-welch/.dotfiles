@@ -1,5 +1,5 @@
 # git aliases
-git config --global alias.lol "log --oneline --graph --decorate"
+git config --global alias.lol "log --pretty=format:"%h%x09%an%x09%ad%x09%s" --date=relative --graph --decorate"
 git config --global alias.realclean "clean -xfd --exclude=.vagrant"
 git config --global alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
 git config --global alias.root "rev-parse --show-toplevel"
