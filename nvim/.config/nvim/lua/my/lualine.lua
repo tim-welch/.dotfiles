@@ -69,7 +69,7 @@ ll.setup({
         always_divide_middle = true,
     },
     sections = {
-        lualine_a = { branch, diagnostics },
+        lualine_a = { "filename", branch, diagnostics },
         lualine_b = { mode },
         lualine_c = {},
         -- lualine_x = { "encoding", "fileformat", "filetype" },
