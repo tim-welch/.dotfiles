@@ -7,9 +7,9 @@ source $HOME/.profile
 mkdir -p "$XDG_DATA_HOME"/bash
 
 # History
-HISTSIZE=1000
+HISTSIZE=10000
 SAVEHIST=1000
-HISTCONTROL=ignoreboth # don't save duplicates or commands starting with space
+HISTCONTROL=ignoreboth:erasedups # don't save duplicates or commands starting with space
 export HISTFILE="$XDG_DATA_HOME"/bash/history
 
 # Completions
