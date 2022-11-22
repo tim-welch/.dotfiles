@@ -14,8 +14,8 @@ alias tmux='TERM=xterm-256color tmux'
 alias ssh='ssh -Y'
 alias e=$EDITOR
 
-alias ls="exa --group-directories-first --git"
-alias tree="exa -T"
+# alias ls="exa --group-directories-first --git"
+# alias tree="exa -T"
 
-alias cat="bat"
-alias less="bat"
+# alias cat="bat"
+# alias less="bat"
