@@ -7,6 +7,7 @@ git config --global alias.bn "rev-parse --abbrev-ref HEAD"
 git config --global alias.save "!git add -A && git commit -m 'wip: savepoint'"
 git config --global alias.aliases "!git config --list --show-origin | grep alias"
 git config --global alias.fixdate '!git commit --amend --no-edit --date "$(date)"'
+git config --global alias.rmbranches '!git branch | xargs git branch -d'
 
 
 # git config --global alias.publish "push -u origin $(git bn)"

@@ -2,17 +2,25 @@
 
 # Modified from https://github.com/awesome-streamers/awesome-streamerrc/blob/master/ThePrimeagen/tmux2
 
+BUILD_MOUNT=$HOME/build/
+
 if [ $# -eq 1 ]; then
     selected=$1
 else
-    items=$(find ~ -maxdepth 1 -mindepth 1 -type d)
-    items+=$(find ~/src -maxdepth 1 -mindepth 1 -type d)
+    items=""
+    items+="$(find $BUILD_MOUNT -maxdepth 1 -mindepth 1 -type d)"
     selected=$(echo "$items" | fzf)
 fi
 
 session=`basename $selected`
 if [ ${session:0:1} == '.' ]; then
     session=_${session:1}
+fi
+
+echo ${selected:0:${#BUILD_MOUNT}}
+if [ ${selected:0:${#BUILD_MOUNT}} == $BUILD_MOUNT ]; then
+    export REMOTE_UNITY_DIR=/build/${selected:${#BUILD_MOUNT}}
+    echo "Setting REMOTE_UNITY_DIR=$REMOTE_UNITY_DIR"
 fi
 
 tmux switch-client -t $session

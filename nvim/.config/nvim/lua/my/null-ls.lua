@@ -10,14 +10,15 @@ local diagnostics = null_ls.builtins.diagnostics
 null_ls.setup({
     debug = false,
     sources = {
-        formatting.prettier,
-        formatting.black,
-        formatting.shfmt,
-        formatting.clang_format,
-        formatting.cmake_format,
-        formatting.isort,
-        formatting.codespell.with({ filetypes = { "markdown" } }),
-        diagnostics.flake8,
+        -- formatting.prettier,
+        -- formatting.black,    -- python formatting
+        -- formatting.shfmt,
+        -- formatting.clang_format,
+        -- formatting.cmake_format,
+        -- formatting.isort,
+        -- formatting.codespell.with({ filetypes = { "markdown" } }),
+        -- diagnostics.flake8,
+        diagnostics.pylint,
         diagnostics.jsonlint,
     },
     on_attach = function(client)
