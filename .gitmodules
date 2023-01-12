@@ -31,3 +31,6 @@
 [submodule "vim/.vim/pack/default/start/lightline.vim"]
 	path = vim/.vim/pack/default/start/lightline.vim
 	url = https://github.com/itchyny/lightline.vim
+[submodule "tmux/.tmux/plugins/tpm"]
+	path = tmux/.tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm

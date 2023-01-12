@@ -60,6 +60,9 @@ require('packer').startup(function(use)
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
 
+  -- tmux and nvim window navigation
+  use 'christoomey/vim-tmux-navigator'
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -424,6 +427,12 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = '[P]roject [V]iew' })
+
+-- Window splits
+vim.keymap.set('n', '<C-w>|', '<C-w>v', { desc = 'Vertical Split' })
+vim.keymap.set('n', '<C-w>-', '<C-w>s', { desc = 'Horizontal Split' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
