@@ -1,7 +1,7 @@
 Learn how to use vim:
   - vim tutor
   - ThePrimeagen on YouTube
-
+  - ThePrimeagen/vim-be-good plugin - game to improve basic motions
 
 
 | Mode | Description |
@@ -10,21 +10,65 @@ Learn how to use vim:
 | i | insert |
 | v | visual select |
 | V | visual select lines |
-| Ex | netrw - not really a mode, but a special buffer |
+| c | command |
 
 
-Standard:
+## Standard
 leader: \
+
 
 | Mode | Command | Description |
 | ---- | ------- | ----------- | 
 | n | :Ex | Open netrw filesystem explorer and editer |
-| Ex | % | Create file |
-| Ex | d | Create directory |
 | n | :e <path/to/file> | open a file to edit |
 
+netrw:
 
-My Config
+| Mode | Command | Description |
+| ---- | ------- | ----------- | 
+| Ex | % | Create file |
+| Ex | d | Create directory |
+
+Motion:
+
+In normal and visual modes
+
+| Keys | Description |
+| ---- | ----------- |
+| hjkl | left, down, up, right |
+| b, w | back and forward by word |
+| B, W | back and forward by big word |
+| _ or ^ | beginning of line |
+| 0 | first character |
+| $ | end of line |
+| f<char> | forward onto <char> |
+| t<char> | forward up to <char> |
+| F<char> | back onto <char> |
+| T<char> | back up to <char> |
+| , and ; | repeat last f, F, t, T (backward and forward) |
+
+Entering insert mode:
+
+In normal mode
+
+| Keys | Description |
+| ---- | ----------- |
+| i | insert at current cursor position |
+| a | insert after current cursor position |
+| I | insert at beginning of line |
+| A | insert at end of line |
+| c<count><motion> | insert replacing char from cursor to motion |
+| ciw | insert replacing the word the cursor is in |
+| o | newline below cursor |
+| O | newline above cursor |
+
+
+
+Windows:
+
+
+
+## My Config
 leader: <space>
 <space>: <Nop> except as <leader>
 
@@ -86,7 +130,7 @@ e.g. caa
 | ac | class outer |
 | ic | class inner |
 
-- Movement:
+- Motion:
 
 | Keys | Description |
 | ---- | ----------- |
