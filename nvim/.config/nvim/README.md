@@ -20,6 +20,7 @@ leader: \
 | Mode | Command | Description |
 | ---- | ------- | ----------- | 
 | n | :Ex | Open netrw filesystem explorer and editer |
+| n | C-^ | Open netrw filesystem explorer and editer |
 | n | :e <path/to/file> | open a file to edit |
 
 netrw:
