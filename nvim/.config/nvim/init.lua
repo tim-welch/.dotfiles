@@ -124,7 +124,7 @@ vim.o.breakindent = true -- indent when line wraps
 vim.o.wrap = true -- enable/disable wrapping
 
 -- Configure scrolling
-vim.o.scrolloff = 4  -- number of lines to keep above and below the cursor when scrolling
+vim.o.scrolloff = 4 -- number of lines to keep above and below the cursor when scrolling
 
 
 -- Case insensitive searching UNLESS /C or capital in search
@@ -168,9 +168,10 @@ vim.o.termguicolors = true
 function ConfigureColors(color)
   color = color or "onedark"
   vim.cmd.colorscheme(color)
-  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
+
 ConfigureColors()
 
 
@@ -183,6 +184,7 @@ vim.g.maplocalleader = ' '
 
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set('n', 'Q', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -194,6 +196,50 @@ vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = '[P]roject [V]iew' })
 -- Window splits
 vim.keymap.set('n', '<C-w>|', '<C-w>v', { desc = 'Vertical Split' })
 vim.keymap.set('n', '<C-w>-', '<C-w>s', { desc = 'Horizontal Split' })
+
+-- Move highlighted lines up and down
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move highlighted lines up' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move highlighted lines down' })
+
+-- Leave cursor in place when joining lines
+-- Note that this uses the z mark, so don't use that for anything else
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join with next line, but leave cursor in position' })
+
+-- Keep cursor centered
+-- This uses zz to recenter the cursor after each jump
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'move 1/2 page down keeping cursor centered' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'move 1/2 page up keeping cursor centered' })
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'search down keeping cursor centered' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'search up keeping cursor centered' })
+
+-- When using p to paste the current paste register over the highlighted text
+-- it replaces the paste register with the hightlighted text.
+-- This mapping allows <leader>p to replace the highlighted text but keep the
+-- same snippet in the paste buffer.
+vim.keymap.set('x', '<leader>p', '"_dP',
+  { desc = 'Replace selected text with clipboard without changing clipboard contents' })
+
+-- Yank into system clipboard
+vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'Yank into system clipboard' })
+vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'Yank into system clipboard' })
+
+-- Delete into void register to avoid replacing current clipboard
+vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete into void register' })
+
+-- Quickfix navigation
+-- Note that this is currently using C-k and C-j which are window navigation
+-- so if these are ever enabled, the key bindings should be updated
+-- vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz')
+-- vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz')
+-- vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
+-- vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
+
+-- Replace current word
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = 'Replace current word' })
+
+-- Mark current file executable
+vim.keymap.set("n", "<leader>x", '<cmd>!chmod +x %<CR>', { silent = true, desc = 'Mark current file e[X]ecutable' })
 
 
 -- [[ Highlight on yank ]]
@@ -274,7 +320,7 @@ vim.keymap.set('n', '<leader>sp', require('telescope.builtin').git_files, { desc
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>ss', function()
-  require('telescope.builtin').grep_string({ search = vim.fn.input({ prompt = 'Grep > '}) })
+  require('telescope.builtin').grep_string({ search = vim.fn.input({ prompt = 'Grep > ' }) })
 end, { desc = '[S]earch input [S]tring' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
@@ -284,9 +330,10 @@ vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc =
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'javascript', 'typescript', 'help', 'vim', 'markdown' },
-  sync_install = false,  -- Install parsers synchronously?
-  auto_install = true,   -- Automatically install missing parsers when entering buffer
+  ensure_installed = { 'c', 'cpp', 'bash', 'python', 'lua', 'go', 'rust', 'javascript', 'typescript', 'help', 'vim',
+    'markdown' },
+  sync_install = false, -- Install parsers synchronously?
+  auto_install = true, -- Automatically install missing parsers when entering buffer
 
   highlight = { enable = true, additional_vim_regex_highlighting = false, },
   indent = { enable = true, disable = { 'python' } },
@@ -395,6 +442,9 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+  nmap('<leader>f', function()
+    vim.lsp.buf.format()
+  end, 'Format current buffer')
 end
 
 -- Enable the following language servers
@@ -490,6 +540,9 @@ cmp.setup {
   },
 }
 
+-- Configure undotree
+vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
+
 -- Configure harpoon
 local mark = require('harpoon.mark')
 local ui = require('harpoon.ui')
@@ -500,8 +553,8 @@ vim.keymap.set('n', '<leader>2', function() ui.nav_file(2) end, { desc = 'Naviga
 vim.keymap.set('n', '<leader>3', function() ui.nav_file(3) end, { desc = 'Navigate to harpooned file' })
 vim.keymap.set('n', '<leader>4', function() ui.nav_file(4) end, { desc = 'Navigate to harpooned file' })
 
--- Configure undotree
-vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
+-- Edit nvim config
+vim.keymap.set('n', '<leader>v', '<cmd>e ~/.dotfiles/nvim/.config/nvim/init.lua<CR>', { desc = 'Edit init.lua' })
 
 
 -- The line beneath this is called `modeline`. See `:help modeline`
