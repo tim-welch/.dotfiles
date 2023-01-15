@@ -42,6 +42,10 @@ require('packer').startup(function(use)
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
+  use { -- Create window with treesitter parse tree
+    'nvim-treesitter/playground',
+    after = 'nvim-treesitter',
+  }
 
   -- Git related plugins
   use 'tpope/vim-fugitive'
@@ -63,7 +67,14 @@ require('packer').startup(function(use)
   -- tmux and nvim window navigation
   use 'christoomey/vim-tmux-navigator'
 
+  -- harpoon allow you to pin files
+  use 'theprimeagen/harpoon'
+
+  -- better undo
+  use 'mbbill/undotree'
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
+  -- These are my own plugins
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
     plugins(use)
@@ -95,39 +106,73 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = vim.fn.expand '$MYVIMRC',
 })
 
+-- ---- ^^^ End of plugin config ^^^ ---- --
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
--- Set highlight on search
-vim.o.hlsearch = false
+-- Configure search
+vim.o.hlsearch = false -- enable/disable highlighting all matches
+vim.o.incsearch = true -- enable/disable search while typing
 
 -- Make line numbers default
 vim.wo.number = true
 vim.o.relativenumber = true
 
--- Enable mouse mode
-vim.o.mouse = 'a'
+-- Configure word wrap
+vim.o.breakindent = true -- indent when line wraps
+vim.o.wrap = true -- enable/disable wrapping
 
--- Enable break indent
-vim.o.breakindent = true
+-- Configure scrolling
+vim.o.scrolloff = 4  -- number of lines to keep above and below the cursor when scrolling
 
--- Save undo history
-vim.o.undofile = true
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Decrease update time
-vim.o.updatetime = 250
+-- Decrease update time (time to wait between keystrokes and for saving swapfile)
+vim.o.updatetime = 100
+
+-- Configure left sign column
 vim.wo.signcolumn = 'yes'
+
+-- Configure line length signifier columns
+vim.o.colorcolumn = "80,100"
+
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect,noinsert'
+
+-- Config tabs
+vim.o.smartindent = true
+-- Not needed because tpope/vim-sleuth detects tabs
+-- vim.o.tabstop = 4
+-- vim.o.softtabstop = 4
+-- vim.o.shiftwidth = 4
+-- vim.o.expandtab = true
+
+-- Configure undo
+vim.o.swapfile = false
+vim.o.backup = false
+vim.o.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.o.undofile = true
+
+-- Configure filenames
+vim.opt.isfname:append("@-@") -- allow @ to be used in filenames
+
+-- Enable mouse mode
+vim.o.mouse = 'a'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+function ConfigureColors(color)
+  color = color or "onedark"
+  vim.cmd.colorscheme(color)
+  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+end
+ConfigureColors()
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
 
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
@@ -136,13 +181,20 @@ vim.o.completeopt = 'menuone,noselect'
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Bring up netrw for file browsing
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = '[P]roject [V]iew' })
+
+-- Window splits
+vim.keymap.set('n', '<C-w>|', '<C-w>v', { desc = 'Vertical Split' })
+vim.keymap.set('n', '<C-w>-', '<C-w>s', { desc = 'Horizontal Split' })
+
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -176,7 +228,7 @@ require('indent_blankline').setup {
   show_trailing_blankline_indent = false,
 }
 
--- Gitsigns
+-- Configure Git plugins
 -- See `:help gitsigns.txt`
 require('gitsigns').setup {
   signs = {
@@ -187,6 +239,8 @@ require('gitsigns').setup {
     changedelete = { text = '~' },
   },
 }
+-- See `:help Git`
+vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -216,8 +270,12 @@ vim.keymap.set('n', '<leader>/', function()
 end, { desc = '[/] Fuzzily search in current buffer]' })
 
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sp', require('telescope.builtin').git_files, { desc = '[S]earch [P]roject files in git' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>ss', function()
+  require('telescope.builtin').grep_string({ search = vim.fn.input({ prompt = 'Grep > '}) })
+end, { desc = '[S]earch input [S]tring' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc = '[S]earch [K]eymaps' })
@@ -226,9 +284,11 @@ vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc =
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim', 'markdown' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'javascript', 'typescript', 'help', 'vim', 'markdown' },
+  sync_install = false,  -- Install parsers synchronously?
+  auto_install = true,   -- Automatically install missing parsers when entering buffer
 
-  highlight = { enable = true },
+  highlight = { enable = true, additional_vim_regex_highlighting = false, },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
@@ -273,15 +333,16 @@ require('nvim-treesitter.configs').setup {
         ['[]'] = '@class.outer',
       },
     },
-    swap = {
-      enable = true,
-      swap_next = {
-        ['<leader>a'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
-      },
-    },
+    -- swap = {
+    --   enable = true,
+    --   swap_next = {
+    --   -- NOTE: If this is ever enabled... <leader>a conflicts with Harpoon
+    --     ['<leader>a'] = '@parameter.inner',
+    --   },
+    --   swap_previous = {
+    --     ['<leader>A'] = '@parameter.inner',
+    --   },
+    -- },
   },
 }
 
@@ -320,7 +381,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('<leader>k', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -399,7 +460,7 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-Tab>'] = cmp.mapping.complete({}),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -429,11 +490,19 @@ cmp.setup {
   },
 }
 
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = '[P]roject [V]iew' })
+-- Configure harpoon
+local mark = require('harpoon.mark')
+local ui = require('harpoon.ui')
+vim.keymap.set('n', '<leader>a', mark.add_file, { desc = '[A]dd current file to harpoon' })
+vim.keymap.set('n', '<leader>h', ui.toggle_quick_menu, { desc = 'Open [H]arpoon menu' })
+vim.keymap.set('n', '<leader>1', function() ui.nav_file(1) end, { desc = 'Navigate to harpooned file' })
+vim.keymap.set('n', '<leader>2', function() ui.nav_file(2) end, { desc = 'Navigate to harpooned file' })
+vim.keymap.set('n', '<leader>3', function() ui.nav_file(3) end, { desc = 'Navigate to harpooned file' })
+vim.keymap.set('n', '<leader>4', function() ui.nav_file(4) end, { desc = 'Navigate to harpooned file' })
 
--- Window splits
-vim.keymap.set('n', '<C-w>|', '<C-w>v', { desc = 'Vertical Split' })
-vim.keymap.set('n', '<C-w>-', '<C-w>s', { desc = 'Horizontal Split' })
+-- Configure undotree
+vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
