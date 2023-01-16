@@ -48,9 +48,9 @@ require('packer').startup(function(use)
   }
 
   -- Git related plugins
-  use 'tpope/vim-fugitive'
-  use 'tpope/vim-rhubarb'
-  use 'lewis6991/gitsigns.nvim'
+  use 'tpope/vim-fugitive' -- Git integration try <leader>gs
+  use 'tpope/vim-rhubarb' -- GitHub integration try <C-X><C-O> in commit msg
+  use 'lewis6991/gitsigns.nvim' -- icon on left indicating what lines changed
 
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
