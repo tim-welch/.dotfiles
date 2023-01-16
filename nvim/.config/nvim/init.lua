@@ -53,6 +53,7 @@ require('packer').startup(function(use)
   use 'lewis6991/gitsigns.nvim' -- icon on left indicating what lines changed
 
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
+  use 'ellisonleao/gruvbox.nvim' -- gruvbox theme
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -165,8 +166,9 @@ vim.o.mouse = 'a'
 
 -- Set colorscheme
 vim.o.termguicolors = true
+vim.o.background = "dark"
 function ConfigureColors(color)
-  color = color or "onedark"
+  color = color or "gruvbox"
   vim.cmd.colorscheme(color)
   -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
   -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
@@ -200,6 +202,10 @@ vim.keymap.set('n', '<C-w>-', '<C-w>s', { desc = 'Horizontal Split' })
 -- Move highlighted lines up and down
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move highlighted lines up' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move highlighted lines down' })
+
+-- Keep text highlighted after indent
+vim.keymap.set('v', '<', "<gv", { desc = 'Keep text highlighted after deindent' })
+vim.keymap.set('v', '>', ">gv", { desc = 'Keep text highlighted after indent' })
 
 -- Leave cursor in place when joining lines
 -- Note that this uses the z mark, so don't use that for anything else
@@ -258,7 +264,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'onedark',
+    theme = 'gruvbox',
     component_separators = '|',
     section_separators = '',
   },
@@ -330,7 +336,7 @@ vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc =
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'bash', 'python', 'lua', 'go', 'rust', 'javascript', 'typescript', 'help', 'vim',
+  ensure_installed = { 'c', 'cpp', 'bash', 'python', 'lua', 'go', 'rust', 'toml', 'yaml', 'json', 'javascript', 'typescript', 'help', 'vim',
     'markdown' },
   sync_install = false, -- Install parsers synchronously?
   auto_install = true, -- Automatically install missing parsers when entering buffer
