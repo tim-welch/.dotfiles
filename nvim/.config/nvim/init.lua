@@ -48,8 +48,9 @@ require('packer').startup(function(use)
   }
 
   -- Git related plugins
-  use 'tpope/vim-fugitive' -- Git integration try <leader>gs
-  use 'tpope/vim-rhubarb' -- GitHub integration try <C-X><C-O> in commit msg
+  -- NOTE: I use lazygit in a different tmux window
+  -- use 'tpope/vim-fugitive' -- Git integration try <leader>gs
+  -- use 'tpope/vim-rhubarb' -- GitHub integration try <C-X><C-O> in commit msg
   use 'lewis6991/gitsigns.nvim' -- icon on left indicating what lines changed
 
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
@@ -139,7 +140,7 @@ vim.o.updatetime = 100
 vim.wo.signcolumn = 'yes'
 
 -- Configure line length signifier columns
-vim.o.colorcolumn = "80,100"
+vim.o.colorcolumn = "80,120"
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect,noinsert'
@@ -170,8 +171,8 @@ vim.o.background = "dark"
 function ConfigureColors(color)
   color = color or "gruvbox"
   vim.cmd.colorscheme(color)
-  -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-  -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
 
 ConfigureColors()
