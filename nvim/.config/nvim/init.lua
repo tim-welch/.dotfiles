@@ -177,6 +177,24 @@ end
 
 ConfigureColors()
 
+-- Clipboard
+vim.o.clipboard = "unnamedplus" -- use the system clipboard unless a specific register is specified
+if vim.env.TMUX then
+  -- https://rumpelsepp.org/blog/nvim-clipboard-through-ssh/
+  vim.g.clipboard = {
+      name = 'tmux',
+      copy = {
+          ["+"] = {'tmux', 'load-buffer', '-w', '-'},
+          ["*"] = {'tmux', 'load-buffer', '-w', '-'},
+      },
+      paste = {
+          ["+"] = {'bash', '-c', 'tmux refresh-client -l && sleep 0.2 && tmux save-buffer -'},
+          ["*"] = {'bash', '-c', 'tmux refresh-client -l && sleep 0.2 && tmux save-buffer -'},
+      },
+      cache_enabled = false,
+  }
+end
+
 
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
@@ -227,8 +245,8 @@ vim.keymap.set('x', '<leader>p', '"_dP',
   { desc = 'Replace selected text with clipboard without changing clipboard contents' })
 
 -- Yank into system clipboard
-vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'Yank into system clipboard' })
-vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'Yank into system clipboard' })
+-- vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'Yank into system clipboard' })
+-- vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'Yank into system clipboard' })
 
 -- Delete into void register to avoid replacing current clipboard
 vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete into void register' })
