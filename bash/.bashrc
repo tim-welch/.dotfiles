@@ -48,3 +48,6 @@ source "$XDG_CONFIG_HOME/bash/prompt"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# Hook up direnv - must be last line in .bashrc
+eval "$(direnv hook bash)"

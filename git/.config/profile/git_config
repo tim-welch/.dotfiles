@@ -1,3 +1,4 @@
 git config --global pull.rebase true
 git config --global core.whitespace blank-at-eol,tab-in-indent,blank-at-eof
 git config --global merge.conflictstyle diff3
+git config --global core.excludesFile '~/.gitignore-global'
