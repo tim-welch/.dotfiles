@@ -58,6 +58,7 @@ fi
 export PATH
 
 # Register my SSH id
-keychain --nogui --quiet $HOME/.ssh/id_rsa
+[ -e $HOME/.ssh/id_rsa ] && keychain --nogui --quiet $HOME/.ssh/id_rsa
+[ -e $HOME/.ssh/id_ed25519 ] && keychain --nogui --quiet $HOME/.ssh/id_ed25519
 . $HOME/.keychain/$(hostname)-sh
 
