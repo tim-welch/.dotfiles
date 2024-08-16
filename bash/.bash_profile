@@ -2,5 +2,3 @@
 [ -f $HOME/.profile ] && source $HOME/.profile
 # Run bashrc
 [ -f $HOME/.bashrc ] && source $HOME/.bashrc
-
-. "$HOME/.cargo/env"
